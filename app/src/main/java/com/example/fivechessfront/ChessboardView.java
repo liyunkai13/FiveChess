@@ -21,8 +21,8 @@ public class ChessboardView extends View {
 
     private int CELL_SIZE;     // 格子宽度
     private Board board; // 引用 Board 类的实例
-    public interface OnChessboardClickListener {
-        void onChessboardClick(float x, float y);
+    public interface OnChessboardClickListener {                        /*定义接口，其实还是要配合onTouchEvent实现*/
+        void onChessboardClick(float x, float y,int row, int col);
     }
     private OnChessboardClickListener onChessboardClickListener;
     // 其他成员变量和方法
@@ -30,7 +30,6 @@ public class ChessboardView extends View {
     public ChessboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-    // 构造方法
     public ChessboardView(Context context, AttributeSet attrs, Board board) {
         super(context, attrs);
         this.board = board;
@@ -82,10 +81,13 @@ public class ChessboardView extends View {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             float x = event.getX();
             float y = event.getY();
-
+            int row = Math.round((y - CELL_SIZE - GRID_WIDTH / 2f) / (CELL_SIZE + GRID_WIDTH));
+            int col = Math.round((x - CELL_SIZE - GRID_WIDTH / 2f) / (CELL_SIZE + GRID_WIDTH));
             if (onChessboardClickListener != null) {
-                onChessboardClickListener.onChessboardClick(x, y);
+                onChessboardClickListener.onChessboardClick(x, y, row, col);
             }
+
+            invalidate(); // 重绘棋盘
             return true;
         }
         return super.onTouchEvent(event);
@@ -97,6 +99,7 @@ public class ChessboardView extends View {
         // 根据 Board 实例的状态确定绘制内容
         // 绘制棋盘
         Paint paint = new Paint();
+        //绘制棋盘背景
         paint.setColor(ContextCompat.getColor(getContext(), R.color.boardColor));
         Rect rect = new Rect((int) (CELL_SIZE*0.5), (int) (CELL_SIZE*0.5), (int) (boardWidth-CELL_SIZE*0.5), (int) (boardWidth-CELL_SIZE*0.5));
         canvas.drawRect(rect, paint);
@@ -110,19 +113,19 @@ public class ChessboardView extends View {
             canvas.drawLine(CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH),CELL_SIZE, CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH), boardWidth - CELL_SIZE-GRID_WIDTH, paint);
         }
         // 绘制棋子
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.BLACK);
         for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < 15;j++) {
+            for (int j = 0; j < BOARD_SIZE;j++) {
                 if (board.boardArray[i][j] == 1) {
-                    canvas.drawCircle(100 + i * 50, 100 + j * 50, 20, paint);
+                    canvas.drawCircle(CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH), CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH), (float)CELL_SIZE/3, paint);
                 }
             }
         }
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.WHITE);
         for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < 15;j++) {
+            for (int j = 0; j < BOARD_SIZE;j++) {
                 if (board.boardArray[i][j] == 2) {
-                    canvas.drawCircle(100 + i * 50, 100 + j * 50, 20, paint);
+                    canvas.drawCircle(CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH), CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH), (float)CELL_SIZE/3, paint);
                 }
             }
         }
