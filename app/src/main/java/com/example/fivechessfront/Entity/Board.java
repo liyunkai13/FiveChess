@@ -1,7 +1,9 @@
 package com.example.fivechessfront.Entity;
 
-public class Board {
-    public static final int SIZE = 15;
+import androidx.annotation.NonNull;
+
+public class Board implements Cloneable{
+    public static final int SIZE = 9;
     private static final int EMPTY = 0;
     public int[][] boardArray;
 
@@ -17,10 +19,7 @@ public class Board {
 
     public boolean isLocValid(int row, int col) {
         // 检查指定位置是否有效的逻辑
-        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE&&boardArray[row][col]==EMPTY) {
-            return true;
-        }
-        return false;
+        return row >= 0 && row < SIZE && col >= 0 && col < SIZE && boardArray[row][col] == EMPTY;
     }
     //判断是否有五子连珠
     public boolean isFiveInLine(int row, int col) {
@@ -118,6 +117,21 @@ public class Board {
         }
 
         return true;
+    }
+
+    @NonNull
+    @Override
+    public Board clone() {
+        try {
+            Board board = (Board) super.clone();
+            board.boardArray = new int[SIZE][SIZE];
+            for (int i = 0; i < SIZE; i++) {
+                System.arraycopy(boardArray[i], 0, board.boardArray[i], 0, SIZE);
+            }
+            return board;
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
     // 其他方法和逻辑
 }
