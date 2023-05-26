@@ -1,7 +1,10 @@
 package com.example.fivechessfront.Activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,12 +22,13 @@ public class GameActivity extends AppCompatActivity {
     private Board board;
     private ChessboardView chessboardView;
     private AiThread aiThread;
+    private TextView turnsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        turnsView = (TextView) findViewById(R.id.turnsView);
         // 初始化玩家、棋盘和游戏
         player1 = new Player("Player 1", true);  // 玩家1是人类玩家
         player2 = new AI("Ai", 2); // 玩家2是机器玩家
@@ -37,6 +41,7 @@ public class GameActivity extends AppCompatActivity {
         chessboardView.setBoard(board);
         // 设置 ChessboardView 的点击事件监听器
         chessboardView.setOnChessboardClickListener(new ChessboardView.OnChessboardClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onChessboardClick(float x, float y, int row, int col) {
                 // 处理点击坐标的逻辑
@@ -49,13 +54,12 @@ public class GameActivity extends AppCompatActivity {
                     if (!game.isGameOver(row, col)) {
                         // 如果游戏未结束，则切换玩家
                         game.switchPlayer();
+                        turnsView.setText("当前回合数"+game.getTurns());
                         if (!game.getCurrentPlayer().isHuman()){
                             // 如果当前玩家是机器玩家，则开始Ai线程
                             aiThread = new AiThread();
                             aiThread.start();
                         }
-
-
                     }
                 }
             }
@@ -77,6 +81,7 @@ public class GameActivity extends AppCompatActivity {
         public void start() {
             super.start();
         }
+        @SuppressLint("SetTextI18n")
         @Override
         public void run() {
             super.run();
@@ -89,6 +94,12 @@ public class GameActivity extends AppCompatActivity {
                 // 如果游戏未结束，则切换玩家
                 Log.d("AiThread", "Ai线程结束运行");
                 game.switchPlayer();
+                turnsView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        turnsView.setText("当前回合数"+game.getTurns());
+                    }
+                });
             }
         }
     }

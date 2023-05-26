@@ -10,6 +10,7 @@ public class Game {
     private final Board board;
     private Player currentPlayer;
     private Player winner;
+    private int turns = 0;
 
     public Game(Player player1, Player player2, Board board) {
         this.player1 = player1;
@@ -41,6 +42,7 @@ public class Game {
      * 切换落子玩家
      */
     public void switchPlayer() {
+        turns++;
         if (currentPlayer == player1) {
             currentPlayer = player2;
             Log.d("currentPlayer", "player2");
@@ -73,6 +75,10 @@ public class Game {
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public int getTurns() {
+        return turns;
     }
 
     // 其他方法和逻辑

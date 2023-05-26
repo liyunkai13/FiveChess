@@ -82,10 +82,6 @@ public class ChessboardView extends View {
             float py = row * (CELL_SIZE + GRID_WIDTH) + CELL_SIZE + GRID_WIDTH / 2f;
             float px = col * (CELL_SIZE + GRID_WIDTH) + CELL_SIZE + GRID_WIDTH / 2f;
             float distance = (float) Math.sqrt((px-x)*(px-x)+(py-y)*(py-y));
-            //Log.d("ChessboardView", "点击坐标：x = " + x + ", y = " + y);
-            //Log.d("ChessboardView", "点击格子：row = " + row + ", col = " + col);
-            //Log.d("ChessboardView", "格子坐标：x = " + px + ", y = " + py);
-            //Log.d("ChessboardView", "距离：dis = " + distance);
             if (onChessboardClickListener != null) {
                 //增加距离检测
                 if(distance<=MIN_DIS) {
