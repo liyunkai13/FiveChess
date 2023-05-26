@@ -15,7 +15,6 @@ public class Game {
         this.player1 = player1;
         this.player2 = player2;
         this.board = board;
-        currentPlayer = player1;
     }
     /**
      * 随机分配玩家的棋子颜色，黑棋先手
@@ -28,15 +27,14 @@ public class Game {
             player1.setPieceType(1);
             player2.setPieceType(2);
             currentPlayer = player1;
+            Log.d("黑子先行", "player1");
 
         } else {
             player1.setPieceType(2);
             player2.setPieceType(1);
             currentPlayer = player2;
+            Log.d("黑子先行", "player2");
         }
-    }
-    public void startGame() {
-        // 游戏开始的逻辑
     }
 
     /**
@@ -45,12 +43,12 @@ public class Game {
     public void switchPlayer() {
         if (currentPlayer == player1) {
             currentPlayer = player2;
+            Log.d("currentPlayer", "player2");
         } else {
             currentPlayer = player1;
+            Log.d("currentPlayer", "player1,该你啦！");
         }
     }
-
-
 
     public boolean isGameOver(int row, int col) {
         // 判断游戏是否结束的逻辑
