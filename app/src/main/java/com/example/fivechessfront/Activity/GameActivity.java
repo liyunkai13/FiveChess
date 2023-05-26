@@ -6,10 +6,10 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fivechessfront.Entity.Board;
-import com.example.fivechessfront.ChessboardView;
 import com.example.fivechessfront.Entity.Game;
 import com.example.fivechessfront.Entity.Player;
 import com.example.fivechessfront.R;
+import com.example.fivechessfront.View.ChessboardView;
 import com.example.fivechessfront.utils.AI;
 
 public class GameActivity extends AppCompatActivity {
