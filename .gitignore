@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+# 忽略整个.idea文件夹
+/.idea/
