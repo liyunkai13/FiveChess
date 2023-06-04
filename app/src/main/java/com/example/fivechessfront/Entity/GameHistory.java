@@ -31,7 +31,6 @@ public class GameHistory {
     public void setResult(String result) {
         this.result = result;
     }
-
     public String getDATE_FORMAT() {
         return DATE_FORMAT;
     }

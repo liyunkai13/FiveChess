@@ -1,5 +1,6 @@
 package com.example.fivechessfront.utils;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -64,8 +65,8 @@ public class MyHelper extends SQLiteOpenHelper {
         List<Account> accountList = new ArrayList<>();
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                String name1 = cursor.getString(cursor.getColumnIndex("name"));
-                String password1 = cursor.getString(cursor.getColumnIndex("password"));
+                @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("name"));
+                @SuppressLint("Range") String password1 = cursor.getString(cursor.getColumnIndex("password"));
                 Account user = new Account();
                 user.setName(name1);
                 user.setPassword(password1);
@@ -102,11 +103,11 @@ public class MyHelper extends SQLiteOpenHelper {
         List<GameHistory> GameHistoryList = new ArrayList<>();
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                String account1 = cursor.getString(cursor.getColumnIndex("name"));
-                String result1 = cursor.getString(cursor.getColumnIndex("result"));
-                String color1 = cursor.getString(cursor.getColumnIndex("color"));
-                String process1 = cursor.getString(cursor.getColumnIndex("process"));
-                String DATE_FORMAT1 = cursor.getString(cursor.getColumnIndex("DATE_FORMAT"));
+                @SuppressLint("Range") String account1 = cursor.getString(cursor.getColumnIndex("name"));
+                @SuppressLint("Range") String result1 = cursor.getString(cursor.getColumnIndex("result"));
+                @SuppressLint("Range") String color1 = cursor.getString(cursor.getColumnIndex("color"));
+                @SuppressLint("Range") String process1 = cursor.getString(cursor.getColumnIndex("process"));
+                @SuppressLint("Range") String DATE_FORMAT1 = cursor.getString(cursor.getColumnIndex("DATE_FORMAT"));
                 GameHistory gameHistory = new GameHistory();
                 gameHistory.setAccount(account1);
                 gameHistory.setColor(color1);
