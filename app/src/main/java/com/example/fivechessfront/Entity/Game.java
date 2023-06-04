@@ -12,6 +12,8 @@ public class Game {
     private Player winner;
     private int turns = 0;
 
+    public Player getWinner() {return winner;}//获取获胜者
+
     public Game(Player player1, Player player2, Board board) {
         this.player1 = player1;
         this.player2 = player2;
