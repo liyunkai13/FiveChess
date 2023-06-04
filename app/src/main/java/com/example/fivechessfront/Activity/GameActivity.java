@@ -2,7 +2,6 @@ package com.example.fivechessfront.Activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -11,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fivechessfront.Entity.Board;
 import com.example.fivechessfront.Entity.Game;
 import com.example.fivechessfront.Entity.Player;
+import com.example.fivechessfront.Enums.GameDifficulty;
 import com.example.fivechessfront.R;
 import com.example.fivechessfront.View.ChessboardView;
 import com.example.fivechessfront.utils.AI;
@@ -31,7 +31,9 @@ public class GameActivity extends AppCompatActivity {
         turnsView = (TextView) findViewById(R.id.turnsView);
         // 初始化玩家、棋盘和游戏
         player1 = new Player("Player 1", true);  // 玩家1是人类玩家
-        player2 = new AI("Ai", 2); // 玩家2是机器玩家
+        // 获取传递的难度值
+        int difficulty = getIntent().getIntExtra("difficulty", GameDifficulty.EASY.getValue());
+        player2 = new AI("Ai", difficulty); // 玩家2是机器玩家
         board = new Board();
         game = new Game(player1, player2, board);
         game.assignRandomColors(); // 随机分配玩家的棋子颜色
