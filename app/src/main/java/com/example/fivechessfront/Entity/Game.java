@@ -18,12 +18,14 @@ public class Game {
     private AiThread aiThread;
     private int turns = 0;
     private GameUIHelper helper;
+    private GameHistory gameHistory;
 
-    public Game(Player player1, Player player2, Board board,GameUIHelper helper) {
+    public Game(Player player1, Player player2, Board board,GameUIHelper helper,GameHistory gameHistory){
         this.player1 = player1;
         this.player2 = player2;
         this.board = board;
         this.helper = helper;
+        this.gameHistory = gameHistory;
         assignRandomColors(); // 随机分配玩家的棋子颜色
     }
 
@@ -79,6 +81,8 @@ public class Game {
     public void PlayerSet(int row, int col){
         // 当前玩家是玩家1且游戏未结束时，执行下棋逻辑
         board.placePiece(row, col, player1);
+        gameHistory.setProcess(gameHistory.getProcess() +row);//记录坐标
+        gameHistory.setProcess(gameHistory.getProcess() + col);//记录坐标
         helper.Invalidate(); // 更新棋盘显示
         if (!isGameOver(row, col)) {
             // 如果游戏未结束，则切换玩家
@@ -89,8 +93,7 @@ public class Game {
             }
         }
         else{
-            helper.ShowDialog(GetWinner().getName(),t->{
-                Restart();});
+            helper.ShowDialog(GetWinner().getName(),t-> Restart());
         }
     }
 
@@ -133,14 +136,15 @@ public class Game {
             // Ai线程的逻辑
             int[] move = ((AI) getCurrentPlayer()).getBestMove(board);
             board.placePiece(move[0], move[1], getCurrentPlayer());
+            gameHistory.setProcess(gameHistory.getProcess() + move[0]);//记录坐标
+            gameHistory.setProcess(gameHistory.getProcess() + move[1]);//记录坐标
             helper.Invalidate(); // 更新棋盘显示
             if (!isGameOver(move[0], move[1])) {
                 switchPlayer(); // 如果游戏未结束，则切换玩家
                 helper.AIAddTurns(getTurns());
             }
             else{
-                helper.ShowDialog(GetWinner().getName(),t->{
-                    Restart();});
+                helper.ShowDialog(GetWinner().getName(),t-> Restart());
             }
             Looper.loop();
         }
