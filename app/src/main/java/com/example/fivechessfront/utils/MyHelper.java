@@ -1,6 +1,5 @@
 package com.example.fivechessfront.utils;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,19 +21,19 @@ public class MyHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "mySQLite.db";
     //表格的名字
     private static final String TABLE_NAME_1 = "database1";//本表仅用于存储账号、密码
-    private static final String TABLE_NAME_2 = "database2";//本表用于存储游戏记录（涵盖所有对局:账户 输赢情况 棋子颜色 比赛记录 比赛时间）
+    private static final String TABLE_NAME_2 = "database2";//本表用于存储游戏记录（涵盖所有对局:账户 输赢情况 棋子颜色 比赛记录 回合数 比赛时间）
 
     //创建数据库
     //数据库1：保存用户账号密码信息
     //数据库1 eg: 1234 haha
-    //数据库1：account text, pass text
-    //数据库2：存储游戏记录（涵盖所有对局:账户 输赢情况 棋子颜色 比赛记录 比赛时间）
+    //数据库1：name text, password text
+    //数据库2：存储游戏记录（涵盖所有对局:账户 输赢情况 棋子颜色 比赛记录 回合数 比赛时间）
     //数据库2 eg: 123 WIN black 132456765373(每两个数字表示一个棋子位置，黑子先手，黑白交替) 2023-05-11
-    //数据库2：account text, result CHAR(5), color CHAR(5), process String , DATE_FORMAT String
+    //数据库2：name text, result CHAR(5), color CHAR(5), process String , int cnt , DATE_FORMAT String
     private static final String CREATE_TABLE1_SQL = "create table " + TABLE_NAME_1 +
             "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, password text)";
     private static final String CREATE_TABLE2_SQL = "create table " + TABLE_NAME_2 +
-            "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, result CHAR(5), color CHAR(5), process String,DATE_FORMAT String)";
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, result CHAR(5), color CHAR(5), process String,cnt int,DATE_FORMAT String)";
     public MyHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -58,15 +57,15 @@ public class MyHelper extends SQLiteOpenHelper {
 
     //根据账号密码查询
     //提醒：在后续的判断之中，返回的userList是否为空即为判断标准
-    public List<Account> selectByAccountAndPass(String account, String password) {
+    public List<Account> selectByAccountAndPass(String name, String password) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_1, null,
-                "account=? and pass=?", new String[]{account, password}, null, null, null);
+                "name=? and password=?", new String[]{name, password}, null, null, null);
         List<Account> accountList = new ArrayList<>();
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("name"));
-                @SuppressLint("Range") String password1 = cursor.getString(cursor.getColumnIndex("password"));
+                String name1 = cursor.getString(cursor.getColumnIndex("name"));
+                String password1 = cursor.getString(cursor.getColumnIndex("password"));
                 Account user = new Account();
                 user.setName(name1);
                 user.setPassword(password1);
@@ -81,16 +80,17 @@ public class MyHelper extends SQLiteOpenHelper {
     }
 
     //插入游戏对局所有信息
-    public long insertGameData(Account account, boolean result, boolean color, String process, String DATE_FORMAT){
+    public long insertGameData(Account account, String result, String color, String process, int cnt,String DATE_FORMAT){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("account", account.getName());
-        if(result==true) values.put("result","WIN");
-        else values.put("result","LOSE");
-        if(color==true) values.put("color","black");
-        else values.put("color","white");
+
+        values.put("name", account.getName());
+        values.put("result",result);
+        values.put("color",color);
+        values.put("cnt",process.length()/2);
         values.put("process",process);
         values.put("DATE_FORMAT",DATE_FORMAT);
+
         return db.insert(TABLE_NAME_2,null,values);
     }
     //查询游戏对局所有信息
@@ -98,18 +98,19 @@ public class MyHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_2, null,
-                "account = ?", new String[]{account.getAccount()},
+                "account = ?", new String[]{account.getName()},
                 null, null, null);
         List<GameHistory> GameHistoryList = new ArrayList<>();
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                @SuppressLint("Range") String account1 = cursor.getString(cursor.getColumnIndex("name"));
-                @SuppressLint("Range") String result1 = cursor.getString(cursor.getColumnIndex("result"));
-                @SuppressLint("Range") String color1 = cursor.getString(cursor.getColumnIndex("color"));
-                @SuppressLint("Range") String process1 = cursor.getString(cursor.getColumnIndex("process"));
-                @SuppressLint("Range") String DATE_FORMAT1 = cursor.getString(cursor.getColumnIndex("DATE_FORMAT"));
+                String name1 = cursor.getString(cursor.getColumnIndex("name"));
+                String result1 = cursor.getString(cursor.getColumnIndex("result"));
+                String color1 = cursor.getString(cursor.getColumnIndex("color"));
+                String process1 = cursor.getString(cursor.getColumnIndex("process"));
+                String cnt1 = cursor.getString(cursor.getColumnIndex("cnt"));
+                String DATE_FORMAT1 = cursor.getString(cursor.getColumnIndex("DATE_FORMAT"));
                 GameHistory gameHistory = new GameHistory();
-                gameHistory.setAccount(account1);
+                gameHistory.setName(name1);
                 gameHistory.setColor(color1);
                 gameHistory.setProcess(process1);
                 gameHistory.setResult(result1);
