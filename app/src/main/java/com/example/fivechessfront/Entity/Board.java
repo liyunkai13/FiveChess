@@ -2,6 +2,8 @@ package com.example.fivechessfront.Entity;
 
 import androidx.annotation.NonNull;
 
+import java.util.Arrays;
+
 public class Board implements Cloneable{
     public static final int SIZE = 9;
     private static final int EMPTY = 0;
@@ -21,6 +23,13 @@ public class Board implements Cloneable{
         // 检查指定位置是否有效的逻辑
         return row >= 0 && row < SIZE && col >= 0 && col < SIZE && boardArray[row][col] == EMPTY;
     }
+
+    public void ResetBoard(){
+        for (int i = 0; i < boardArray.length; i++) {
+            Arrays.fill(boardArray[i], 0);
+        }
+    }
+
     //判断是否有五子连珠
     public boolean isFiveInLine(int row, int col) {
         int pieceType = boardArray[row][col];
