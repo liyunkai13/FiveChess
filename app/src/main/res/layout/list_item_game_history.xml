@@ -43,9 +43,8 @@
         android:text="Date" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
         android:layout_gravity="end|center"
         android:text="回放"
         />

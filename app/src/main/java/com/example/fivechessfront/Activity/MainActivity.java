@@ -60,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
         showHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO
+                //跳转到历史界面
+                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(intent);
             }
         });
         exitButton.setOnClickListener(new View.OnClickListener() {

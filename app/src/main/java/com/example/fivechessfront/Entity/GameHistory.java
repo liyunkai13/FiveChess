@@ -1,7 +1,9 @@
 package com.example.fivechessfront.Entity;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.example.fivechessfront.utils.AccountManager;
 import com.example.fivechessfront.utils.MyHelper;
 
 //存储游戏记录（涵盖所有对局:账户 输赢情况 棋子颜色 比赛记录）
@@ -55,7 +57,8 @@ public class GameHistory {
     }
 
     public void SubmitToSql(){
-        //TODO 完成将GameHistory数据提交到数据库操作
+        sqlHelper.insertGameData(this.name, this.result, this.color, this.process, this.cnt, this.DATE_FORMAT);
+        Log.d("GameHistory", "SubmitToSql: "+this.toString());
     }
 
     @Override

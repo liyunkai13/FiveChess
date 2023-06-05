@@ -9,6 +9,7 @@ import com.example.fivechessfront.UIHelper.GameUIHelper;
 import com.example.fivechessfront.utils.AI;
 import com.example.fivechessfront.utils.Human;
 
+import java.util.Date;
 import java.util.Random;
 
 public class Game {
@@ -122,10 +123,22 @@ public class Game {
             }
         }
         else{
-            helper.ShowDialog(GetWinner().getName(),t-> Restart());
+            GameFinish();
         }
     }
 
+    public void GameFinish(){
+        gameHistory.cnt = turns;
+        gameHistory.name = player1.getName()+" vs "+player2.getName();
+        if (GetWinner()==null) gameHistory.result = "平局";
+        else if (GetWinner()==player1) gameHistory.result = "胜";
+        else gameHistory.result = "负";
+        //获取当前时间
+        Date date = new Date();
+        gameHistory.DATE_FORMAT = date.toString();
+        gameHistory.SubmitToSql();
+        helper.ShowDialog(GetWinner().getName(),t-> Restart());
+    }
 
     public boolean isGameOver(Position position) {
         int row = position.row;

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fivechessfront.Entity.Account;
-import com.example.fivechessfront.MainActivity;
+import com.example.fivechessfront.Activity.MainActivity;
 import com.example.fivechessfront.R;
 import com.example.fivechessfront.utils.AccountManager;
 import com.example.fivechessfront.utils.MyHelper;

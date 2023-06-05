@@ -83,14 +83,14 @@ public class MyHelper extends SQLiteOpenHelper {
     }
 
     //插入游戏对局所有信息
-    public long insertGameData(Account account, String result, String color, String process, int cnt,String DATE_FORMAT){
+    public long insertGameData(String name, String result, String color, String process, int cnt,String DATE_FORMAT){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("name", account.getName());
+        values.put("name",name);
         values.put("result",result);
         values.put("color",color);
-        values.put("cnt",process.length()/2);
+        values.put("cnt",cnt);
         values.put("process",process);
         values.put("DATE_FORMAT",DATE_FORMAT);
 
@@ -116,6 +116,7 @@ public class MyHelper extends SQLiteOpenHelper {
                 gameHistory.setName(name1);
                 gameHistory.setColor(color1);
                 gameHistory.setProcess(process1);
+                gameHistory.setCnt(Integer.parseInt(cnt1));
                 gameHistory.setResult(result1);
                 gameHistory.setDATE_FORMAT(DATE_FORMAT1);
                 GameHistoryList.add(gameHistory);
