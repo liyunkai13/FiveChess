@@ -4,15 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activity.MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/cover"
+        android:padding="16dp">
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="五子棋"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择人机难度"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"/>
+
+            <Spinner
+                android:id="@+id/difficultySpinner"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:spinnerMode="dropdown" />
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/startAiGameButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@color/boardColor"
+            android:text="人机对战"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"/>
+        <Button
+            android:id="@+id/startPeopleGameButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@color/boardColor"
+
+            android:text="本地对战"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"/>
+        <Button
+            android:id="@+id/showHistoryButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@color/boardColor"
+
+            android:text="历史记录"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"/>
+
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@color/boardColor"
+
+            android:text="退出"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
