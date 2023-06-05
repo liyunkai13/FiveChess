@@ -9,6 +9,7 @@ import com.example.fivechessfront.UIHelper.GameUIHelper;
 import com.example.fivechessfront.utils.AI;
 import com.example.fivechessfront.utils.Human;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -53,14 +54,15 @@ public class Game {
             Log.d("Game","开启了ai");
             StartAi();
         }
-        if(player1.getPieceType()==1) gameHistory.setColor("BLACK");//在数据库中插入棋子的颜色
-        else gameHistory.setColor("WHITE");
+        if(player1.getPieceType()==1) gameHistory.setColor("执黑");//在数据库中插入棋子的颜色
+        else gameHistory.setColor("执白");
     }
 
     public void Restart(){
         turns = 0;
         board.ResetBoard();
         helper.Invalidate();
+        gameHistory.Clear();
         Start();
     }
 
@@ -135,7 +137,8 @@ public class Game {
         else gameHistory.result = "负";
         //获取当前时间
         Date date = new Date();
-        gameHistory.DATE_FORMAT = date.toString();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat("MM/dd-HH:mm");
+        gameHistory.DATE_FORMAT = f.format(date);
         gameHistory.SubmitToSql();
         helper.ShowDialog(GetWinner().getName(),t-> Restart());
     }

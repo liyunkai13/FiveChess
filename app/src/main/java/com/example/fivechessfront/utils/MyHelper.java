@@ -37,7 +37,7 @@ public class MyHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE1_SQL = "create table " + TABLE_NAME_1 +
             "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, password text)";
     private static final String CREATE_TABLE2_SQL = "create table " + TABLE_NAME_2 +
-            "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, result CHAR(5), color CHAR(5), process String,cnt int,DATE_FORMAT String)";
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text,matchName text,result CHAR(5), color CHAR(5), process String,cnt int,DATE_FORMAT String)";
     public MyHelper(@Nullable Context context) {
         super(context, DB_NAME, null, VERSION);
         this.context = context;
@@ -83,10 +83,10 @@ public class MyHelper extends SQLiteOpenHelper {
     }
 
     //插入游戏对局所有信息
-    public long insertGameData(String name, String result, String color, String process, int cnt,String DATE_FORMAT){
+    public long insertGameData(String name, String matchName, String result, String color, String process, int cnt,String DATE_FORMAT){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-
+        values.put("matchName",matchName);
         values.put("name",name);
         values.put("result",result);
         values.put("color",color);
