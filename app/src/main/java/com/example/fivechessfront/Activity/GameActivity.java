@@ -61,18 +61,4 @@ public class GameActivity extends AppCompatActivity {
     }
 }
 
-/*
-在游戏开始时，账户信息应该是已经确定的，所以其中的Account可以设置为全局静态类，方便后续取信息；
-对于本局游戏的结束，可以使用AlertDialog对话框；在弹出对话框之前，需要添加以下代码
-    //记录比赛结果
-    if(game.getWinner()==player1) gameHistory.setResult("WIN");//对局胜利
-    else gameHistory.setResult("LOSE");//对局失利
-    //记录结束的时间
-    Date et = new Date();//建议设置为全局
-    SimpleDateFormat format1 = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-    String str = format1.format(et);
-    gameHistory.setDATE_FORMAT(str);
-
-    //
-* */
 

@@ -11,7 +11,7 @@ import com.example.fivechessfront.utils.MyHelper;
 //name text, result CHAR(5), color CHAR(5), process String
 public class GameHistory {
     final MyHelper sqlHelper;
-    String name;//用户名
+    String name;//对局名称
     String result;//比赛输赢
     String color;//使用棋子颜色
     String process;//比赛过程

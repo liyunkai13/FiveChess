@@ -1,53 +1,78 @@
 <!-- list_item_game_history.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="400dp"
-    android:layout_height="60dp"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
+    android:layout_height="80dp"
     android:background="@drawable/edittext_background"
+    android:layout_gravity="center_horizontal"
     android:orientation="horizontal">
-
-    <TextView
-        android:id="@+id/resultTextView"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Result" />
-    <TextView
-        android:id="@+id/colorTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_gravity="center_vertical"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="Color" />
-    <TextView
-        android:id="@+id/cntTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_gravity="center_vertical"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="Count" />
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/gameNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="GameName" />
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:text="Date" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/resultTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Result" />
+            <TextView
+                android:id="@+id/colorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:text="Color" />
+            <TextView
+                android:id="@+id/cntTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:text="Count" />
 
-    <TextView
-        android:id="@+id/dateTextView"
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_gravity="center_vertical"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="Date" />
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginStart="60dp">
 
-    <Button
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|center"
-        android:text="回放"
-        />
+        <Button
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="回放" />
 
+    </LinearLayout>
 
 </LinearLayout>

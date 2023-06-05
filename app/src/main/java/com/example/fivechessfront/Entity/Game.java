@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.fivechessfront.Enums.GameType;
 import com.example.fivechessfront.UIHelper.GameUIHelper;
 import com.example.fivechessfront.utils.AI;
+import com.example.fivechessfront.utils.AccountManager;
 import com.example.fivechessfront.utils.Human;
 
 import java.util.Date;
@@ -35,13 +36,14 @@ public class Game {
     }
 
     public void SetGameType(GameType type){
+        String name = AccountManager.getInstance().getAccount().name;
         switch(type) {
             case PlayerVsPlayer:
-                player1 = new Human("player1",this);
-                player2 = new Human("player2",this);
+                player1 = new Human(name,this);
+                player2 = new Human(name+"的伙伴",this);
                 break;
             case PlayerVsAi:
-                player1 = new Human("player1",this);
+                player1 = new Human(name,this);
                 player2 = new AI(2,this);
                 break;
         }
