@@ -1,5 +1,6 @@
 package com.example.fivechessfront.utils;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -19,9 +20,12 @@ import java.util.List;
 public class MyHelper extends SQLiteOpenHelper {
     //数据库的名字
     private static final String DB_NAME = "mySQLite.db";
+    private static final int VERSION = 2;
     //表格的名字
     private static final String TABLE_NAME_1 = "database1";//本表仅用于存储账号、密码
     private static final String TABLE_NAME_2 = "database2";//本表用于存储游戏记录（涵盖所有对局:账户 输赢情况 棋子颜色 比赛记录 回合数 比赛时间）
+
+    private Context context;
 
     //创建数据库
     //数据库1：保存用户账号密码信息
@@ -34,8 +38,9 @@ public class MyHelper extends SQLiteOpenHelper {
             "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, password text)";
     private static final String CREATE_TABLE2_SQL = "create table " + TABLE_NAME_2 +
             "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, result CHAR(5), color CHAR(5), process String,cnt int,DATE_FORMAT String)";
-    public MyHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public MyHelper(@Nullable Context context) {
+        super(context, DB_NAME, null, VERSION);
+        this.context = context;
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -64,8 +69,8 @@ public class MyHelper extends SQLiteOpenHelper {
         List<Account> accountList = new ArrayList<>();
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                String name1 = cursor.getString(cursor.getColumnIndex("name"));
-                String password1 = cursor.getString(cursor.getColumnIndex("password"));
+                @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("name"));
+                @SuppressLint("Range") String password1 = cursor.getString(cursor.getColumnIndex("password"));
                 Account user = new Account();
                 user.setName(name1);
                 user.setPassword(password1);
@@ -103,13 +108,13 @@ public class MyHelper extends SQLiteOpenHelper {
         List<GameHistory> GameHistoryList = new ArrayList<>();
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                String name1 = cursor.getString(cursor.getColumnIndex("name"));
-                String result1 = cursor.getString(cursor.getColumnIndex("result"));
-                String color1 = cursor.getString(cursor.getColumnIndex("color"));
-                String process1 = cursor.getString(cursor.getColumnIndex("process"));
-                String cnt1 = cursor.getString(cursor.getColumnIndex("cnt"));
-                String DATE_FORMAT1 = cursor.getString(cursor.getColumnIndex("DATE_FORMAT"));
-                GameHistory gameHistory = new GameHistory();
+                @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("name"));
+                @SuppressLint("Range") String result1 = cursor.getString(cursor.getColumnIndex("result"));
+                @SuppressLint("Range") String color1 = cursor.getString(cursor.getColumnIndex("color"));
+                @SuppressLint("Range") String process1 = cursor.getString(cursor.getColumnIndex("process"));
+                @SuppressLint("Range") String cnt1 = cursor.getString(cursor.getColumnIndex("cnt"));
+                @SuppressLint("Range") String DATE_FORMAT1 = cursor.getString(cursor.getColumnIndex("DATE_FORMAT"));
+                GameHistory gameHistory = new GameHistory(context);
                 gameHistory.setName(name1);
                 gameHistory.setColor(color1);
                 gameHistory.setProcess(process1);

@@ -3,6 +3,7 @@ package com.example.fivechessfront.utils;
 import android.util.Log;
 
 import com.example.fivechessfront.Entity.Board;
+import com.example.fivechessfront.Entity.Game;
 import com.example.fivechessfront.Entity.Player;
 
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ import java.util.List;
 public class AI extends Player {
     private int maxDepth; // 最大搜索深度
 
-    public AI(String name,int maxDepth) {
-        super(name,false);
+    public AI(int maxDepth, Game game) {
+        super("AI",false,game);
         this.maxDepth = maxDepth;
     }
 

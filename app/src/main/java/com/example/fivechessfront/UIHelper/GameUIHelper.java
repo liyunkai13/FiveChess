@@ -1,7 +1,9 @@
 package com.example.fivechessfront.UIHelper;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Looper;
 import android.widget.TextView;
 
 import com.example.fivechessfront.View.ChessboardView;
@@ -19,9 +21,6 @@ public class GameUIHelper {
         this.turnsView = turnsView;
         builder = new AlertDialog.Builder(context);
     }
-    public void AIAddTurns(int turns){
-        turnsView.post(() -> turnsView.setText("当前回合数"+turns));
-    }
     public void Invalidate(){
         chessboardView.invalidate();
         turnsView.invalidate();
@@ -34,7 +33,13 @@ public class GameUIHelper {
         dialog = builder.create();
         dialog.show();
     }
+    @SuppressLint("SetTextI18n")
     public void SetTurns(int turns){
-        turnsView.setText("当前回合数"+turns);
+        if (Looper.myLooper() == Looper.getMainLooper()) { // UI主线程
+            turnsView.setText("当前回合数"+turns);
+        } else { // 非UI主线程
+            turnsView.post(() -> turnsView.setText("当前回合数"+turns));
+        }
+
     }
 }

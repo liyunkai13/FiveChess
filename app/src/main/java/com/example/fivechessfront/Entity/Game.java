@@ -4,14 +4,21 @@ import android.annotation.SuppressLint;
 import android.os.Looper;
 import android.util.Log;
 
+import com.example.fivechessfront.Enums.GameType;
 import com.example.fivechessfront.UIHelper.GameUIHelper;
 import com.example.fivechessfront.utils.AI;
+import com.example.fivechessfront.utils.Human;
 
 import java.util.Random;
 
 public class Game {
-    private final Player player1;
-    private final Player player2;
+    private Player player1;
+    private Player player2;
+
+    public Board getBoard() {
+        return board;
+    }
+
     private final Board board;
     private Player currentPlayer;
     private Player winner;
@@ -20,20 +27,33 @@ public class Game {
     private GameUIHelper helper;
     private GameHistory gameHistory;
 
-    public Game(Player player1, Player player2, Board board,GameUIHelper helper,GameHistory gameHistory){
-        this.player1 = player1;
-        this.player2 = player2;
-        this.board = board;
+    public Game(GameUIHelper helper,GameHistory gameHistory){
+        board = new Board();
         this.helper = helper;
         this.gameHistory = gameHistory;
-        assignRandomColors(); // 随机分配玩家的棋子颜色
+    }
+
+    public void SetGameType(GameType type){
+        switch(type) {
+            case PlayerVsPlayer:
+                player1 = new Human("player1",this);
+                player2 = new Human("player2",this);
+                break;
+            case PlayerVsAi:
+                player1 = new Human("player1",this);
+                player2 = new AI(2,this);
+                break;
+        }
     }
 
     public void Start(){
         assignRandomColors();// 随机分配玩家的棋子颜色
         if (!getCurrentPlayer().isHuman()){
+            Log.d("Game","开启了ai");
             StartAi();
         }
+        if(player1.getPieceType()==1) gameHistory.setColor("BLACK");//在数据库中插入棋子的颜色
+        else gameHistory.setColor("WHITE");
     }
 
     public void Restart(){
@@ -41,6 +61,20 @@ public class Game {
         board.ResetBoard();
         helper.Invalidate();
         Start();
+    }
+
+    public void RunATurn(){
+        currentPlayer.Drops();
+        gameHistory.WriteProcess(currentPlayer.getIntention());
+        helper.Invalidate();
+        ContinueDetect(currentPlayer.getIntention());
+    }
+
+    public void PassIntention(int row,int col){
+        currentPlayer.setIntention(new Position(col,row));
+    }
+    public void PassIntention(Position intention){
+        currentPlayer.setIntention(intention);
     }
 
     /**
@@ -78,13 +112,8 @@ public class Game {
         }
     }
 
-    public void PlayerSet(int row, int col){
-        // 当前玩家是玩家1且游戏未结束时，执行下棋逻辑
-        board.placePiece(row, col, player1);
-        gameHistory.setProcess(gameHistory.getProcess() +row);//记录坐标
-        gameHistory.setProcess(gameHistory.getProcess() + col);//记录坐标
-        helper.Invalidate(); // 更新棋盘显示
-        if (!isGameOver(row, col)) {
+    public void ContinueDetect(Position intention){
+        if (!isGameOver(intention)) {
             // 如果游戏未结束，则切换玩家
             switchPlayer();
             helper.SetTurns(getTurns());
@@ -98,21 +127,17 @@ public class Game {
     }
 
 
-    public boolean isGameOver(int row, int col) {
+    public boolean isGameOver(Position position) {
+        int row = position.row;
+        int col = position.col;
         // 判断游戏是否结束的逻辑
         // 判断是否有一方获胜
         if (board.isFiveInLine(row, col)) {
             winner = currentPlayer;
-            if (winner == player1) {
-                Log.d("GameOver", "你获胜啦！");
-            } else {
-                Log.d("GameOver", "很遗憾，胜败乃兵家常事~ ");
-            }
             return true;
         }
         if (board.isFull()) {
             winner = null;
-            Log.d("GameOver", "平局啦！"); // 平局
             return true;
         }
         return false;
@@ -134,18 +159,11 @@ public class Game {
             Looper.prepare();
             super.run();
             // Ai线程的逻辑
-            int[] move = ((AI) getCurrentPlayer()).getBestMove(board);
-            board.placePiece(move[0], move[1], getCurrentPlayer());
-            gameHistory.setProcess(gameHistory.getProcess() + move[0]);//记录坐标
-            gameHistory.setProcess(gameHistory.getProcess() + move[1]);//记录坐标
-            helper.Invalidate(); // 更新棋盘显示
-            if (!isGameOver(move[0], move[1])) {
-                switchPlayer(); // 如果游戏未结束，则切换玩家
-                helper.AIAddTurns(getTurns());
-            }
-            else{
-                helper.ShowDialog(GetWinner().getName(),t-> Restart());
-            }
+            AI ai = (AI) getCurrentPlayer();
+            int[] move = ai.getBestMove(board);
+            Position intention = new Position(move[1],move[0]);
+            ai.game.PassIntention(intention);
+            ai.game.RunATurn();
             Looper.loop();
         }
     }

@@ -10,6 +10,7 @@ import com.example.fivechessfront.Entity.Board;
 import com.example.fivechessfront.Entity.Game;
 import com.example.fivechessfront.Entity.GameHistory;
 import com.example.fivechessfront.Entity.Player;
+import com.example.fivechessfront.Enums.GameType;
 import com.example.fivechessfront.R;
 import com.example.fivechessfront.UIHelper.GameUIHelper;
 import com.example.fivechessfront.View.ChessboardView;
@@ -18,14 +19,9 @@ import com.example.fivechessfront.utils.MyHelper;
 
 public class GameActivity extends AppCompatActivity {
     private Game game;
-    private Player player1;
-    private Player player2;
-    private Board board;
     private ChessboardView chessboardView;
     private TextView turnsView;
     private GameUIHelper helper;
-
-    public MyHelper myHelper;
     private GameHistory gameHistory;
 
     public void Init(){
@@ -34,33 +30,26 @@ public class GameActivity extends AppCompatActivity {
         /*初始化 ChessboardView*/
         chessboardView = findViewById(R.id.chessboard_view);
         helper = new GameUIHelper(chessboardView,turnsView,this);
-        myHelper = new MyHelper(GameActivity.this,"mySQLite.db",null,2);//创建数据库
-        gameHistory = new GameHistory();//创建游戏对局记录类
+        gameHistory = new GameHistory(this);
     }
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Init();
-        // 初始化玩家、棋盘和游戏
-        player1 = new Player("Player 1", true);  // 玩家1是人类玩家
-        player2 = new AI("Ai", 2); // 玩家2是机器玩家
-        board = new Board();
-        game = new Game(player1, player2, board,helper,gameHistory);
+        //player2 = new AI("Ai", 2); // 玩家2是机器玩家
+        game = new Game(helper,gameHistory);
+        game.SetGameType(GameType.PlayerVsAi);
         // 设置 ChessboardView 的 Board 实例
-        chessboardView.setBoard(board);
+        chessboardView.setBoard(game.getBoard());
         // 设置 ChessboardView 的点击事件监听器
         chessboardView.setOnChessboardClickListener((x, y, row, col) -> {
             // 处理点击坐标的逻辑
             Log.d("ChessboardView", "点击坐标：x = " + x + ", y = " + y);
             Log.d("ChessboardView", "点击格子：row = " + row + ", col = " + col);
-            if (game.getCurrentPlayer() == player1&& board.isLocValid(row, col)) {
-                game.PlayerSet(row,col);
+            if (game.getCurrentPlayer().isHuman()) {
+                game.PassIntention(row,col);
+                game.RunATurn();
             }
         });
     }
@@ -69,8 +58,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         game.Start();
-        if(player1.getPieceType()==1) gameHistory.setColor("BLACK");//在数据库中插入棋子的颜色
-        else gameHistory.setColor("WHITE");
     }
 }
 
