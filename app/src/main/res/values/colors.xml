@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="boardColor">#E9AF5B</color>
+    <color name="green">#36E10F</color>
+    <color name="red">#FF0000</color>
 </resources>
