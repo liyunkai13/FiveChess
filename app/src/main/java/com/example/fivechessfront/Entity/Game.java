@@ -140,7 +140,8 @@ public class Game {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat("MM/dd-HH:mm");
         gameHistory.DATE_FORMAT = f.format(date);
         gameHistory.SubmitToSql();
-        helper.ShowDialog(GetWinner().getName(),t-> Restart());
+        helper.showInfoDialog("测试","测试信息","",null,"",t-> Restart());
+        //helper.showInfoDialog(GetWinner().getName(),t-> Restart());
     }
 
     public boolean isGameOver(Position position) {

@@ -2,8 +2,11 @@ package com.example.fivechessfront.View;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -118,7 +121,13 @@ public class ChessboardView extends View {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE;j++) {
                 if (board.boardArray[i][j] == 1) {
-                    canvas.drawCircle(CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH), CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH), (float)CELL_SIZE/3, paint);
+                    Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.black_chequer);
+                    Matrix matrix = new Matrix();
+                    matrix.postScale((float)(CELL_SIZE/3)/128, (float)(CELL_SIZE/3)/128);
+                    Bitmap newBitMap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    // 缩放原图
+                    canvas.drawBitmap(newBitMap,CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH)-45,CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH)-45,paint);
+                    //canvas.drawCircle(CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH), CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH), (float)CELL_SIZE/3, paint);
                 }
             }
         }
@@ -126,7 +135,13 @@ public class ChessboardView extends View {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE;j++) {
                 if (board.boardArray[i][j] == 2) {
-                    canvas.drawCircle(CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH), CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH), (float)CELL_SIZE/3, paint);
+                    Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.white_chequer);
+                    Matrix matrix = new Matrix();
+                    matrix.postScale((float)(CELL_SIZE/3)/128, (float)(CELL_SIZE/3)/128);
+                    Bitmap newBitMap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    // 缩放原图
+                    canvas.drawBitmap(newBitMap,CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH)-45,CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH)-45,paint);
+                    //canvas.drawCircle(CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH), CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH), (float)CELL_SIZE/3, paint);
                 }
             }
         }

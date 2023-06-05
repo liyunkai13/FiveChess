@@ -10,6 +10,7 @@
         android:id="@+id/gridLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-16dp">
 
@@ -19,7 +20,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="30dp"
+            android:background="@drawable/turns_back"
+            android:gravity="center"
+            android:text="回合数:0"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <com.example.fivechessfront.View.ChessboardView
             android:id="@+id/chessboard_view"

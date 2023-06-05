@@ -1,5 +1,6 @@
 package com.example.fivechessfront.Activity;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
