@@ -101,7 +101,7 @@ public class MyHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_2, null,
-                "account = ?", new String[]{account.getName()},
+                "name = ?", new String[]{account.getName()},
                 null, null, null);
         List<GameHistory> GameHistoryList = new ArrayList<>();
         if (cursor != null) {
