@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.fivechessfront.Entity.Account;
 import com.example.fivechessfront.Entity.GameHistory;
 import com.example.fivechessfront.R;
@@ -49,10 +51,12 @@ public class HistoryActivity extends Activity {
     }
 }
 class HistoryAdapter extends BaseAdapter {
+    private Context context;
     private final List<GameHistory> gameHistoryList;
     private final LayoutInflater inflater;
 
     public HistoryAdapter(Context context, List<GameHistory> gameHistoryList) {
+        this.context = context;
         this.gameHistoryList = gameHistoryList;
         inflater = LayoutInflater.from(context);
     }
@@ -85,17 +89,19 @@ class HistoryAdapter extends BaseAdapter {
         GameHistory gameHistory = (GameHistory) getItem(position);
 
         // 在列表项视图中设置数据，例如设置用户名、比赛结果等
+        TextView gameNameTextView = convertView.findViewById(R.id.gameNameTextView);
         TextView resultTextView = convertView.findViewById(R.id.resultTextView);
         TextView colorTextView = convertView.findViewById(R.id.colorTextView);
         TextView cntTextView = convertView.findViewById(R.id.cntTextView);
         TextView dateTextView = convertView.findViewById(R.id.dateTextView);
 
         // 设置历史记录对象的数据到对应的视图
+        gameNameTextView.setText(gameHistory.getName());
         resultTextView.setText(gameHistory.getResult());
         if (Objects.equals(gameHistory.getResult(), "胜利"))
-            resultTextView.setTextColor(0xFF00FF00);
+            resultTextView.setTextColor(ContextCompat.getColor(this.context, R.color.green));
         else
-            resultTextView.setTextColor(0xFFFF0000);
+            resultTextView.setTextColor(ContextCompat.getColor(this.context, R.color.red));
         colorTextView.setText(gameHistory.getColor());
         cntTextView.setText(String.valueOf(gameHistory.getCnt()));
         dateTextView.setText(gameHistory.getDATE_FORMAT());
