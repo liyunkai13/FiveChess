@@ -5,6 +5,12 @@ public class Account {
     String name;
     String password;
 
+    public Account(String name, String password) {
+        super();
+        this.name = name;
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }

@@ -52,7 +52,7 @@ public class MyHelper extends SQLiteOpenHelper {
     }
 
     //注册账号后插入数据
-    public long insertData(Account account){
+    public long insertNewAccount(Account account){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("name", account.getName());
@@ -71,9 +71,7 @@ public class MyHelper extends SQLiteOpenHelper {
             while (cursor.moveToNext()) {
                 @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("name"));
                 @SuppressLint("Range") String password1 = cursor.getString(cursor.getColumnIndex("password"));
-                Account user = new Account();
-                user.setName(name1);
-                user.setPassword(password1);
+                Account user = new Account(name1,password1);
                 accountList.add(user);
             }
             cursor.close();
