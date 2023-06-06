@@ -108,7 +108,7 @@ public class MyHelper extends SQLiteOpenHelper {
         List<GameHistory> GameHistoryList = new ArrayList<>();
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("name"));
+                @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("matchName"));
                 @SuppressLint("Range") String result1 = cursor.getString(cursor.getColumnIndex("result"));
                 @SuppressLint("Range") String color1 = cursor.getString(cursor.getColumnIndex("color"));
                 @SuppressLint("Range") String process1 = cursor.getString(cursor.getColumnIndex("process"));

@@ -66,6 +66,7 @@ public class Game {
         }
         if (player1.getPieceType() == 1) gameHistory.setColor("执黑");//在数据库中插入棋子的颜色
         else gameHistory.setColor("执白");
+        gameHistory.name = player1.getName() + " vs " + player2.getName();
     }
 
     public void Restart() {
