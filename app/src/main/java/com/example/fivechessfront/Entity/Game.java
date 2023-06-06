@@ -1,9 +1,13 @@
 package com.example.fivechessfront.Entity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Looper;
 import android.util.Log;
 
+import com.example.fivechessfront.Activity.GameActivity;
+import com.example.fivechessfront.Activity.MainActivity;
 import com.example.fivechessfront.Enums.GameType;
 import com.example.fivechessfront.UIHelper.GameUIHelper;
 import com.example.fivechessfront.utils.AI;
@@ -30,37 +34,41 @@ public class Game {
     private GameUIHelper helper;
     private GameHistory gameHistory;
 
-    public Game(GameUIHelper helper,GameHistory gameHistory){
+    private Context context;
+
+    public Game(GameUIHelper helper, GameHistory gameHistory, Context context) {
         board = new Board();
         this.helper = helper;
         this.gameHistory = gameHistory;
+        this.context = context;
     }
 
-    public void SetGameType(GameType type){
+    public void SetGameType(GameType type,int difficulty) {
         String name = AccountManager.getInstance().getAccount().name;
-        switch(type) {
+        switch (type) {
             case PlayerVsPlayer:
-                player1 = new Human(name,this);
-                player2 = new Human(name+"的伙伴",this);
+                player1 = new Human(name, this);
+                player2 = new Human(name + "的伙伴", this);
                 break;
             case PlayerVsAi:
-                player1 = new Human(name,this);
-                player2 = new AI(2,this);
+                player1 = new Human(name, this);
+                player2 = new AI(2, this);
                 break;
         }
     }
 
-    public void Start(){
+
+    public void Start() {
         assignRandomColors();// 随机分配玩家的棋子颜色
-        if (!getCurrentPlayer().isHuman()){
-            Log.d("Game","开启了ai");
+        if (!getCurrentPlayer().isHuman()) {
+            Log.d("Game", "开启了ai");
             StartAi();
         }
-        if(player1.getPieceType()==1) gameHistory.setColor("执黑");//在数据库中插入棋子的颜色
+        if (player1.getPieceType() == 1) gameHistory.setColor("执黑");//在数据库中插入棋子的颜色
         else gameHistory.setColor("执白");
     }
 
-    public void Restart(){
+    public void Restart() {
         turns = 0;
         board.ResetBoard();
         helper.Invalidate();
@@ -68,17 +76,18 @@ public class Game {
         Start();
     }
 
-    public void RunATurn(){
+    public void RunATurn() {
         currentPlayer.Drops();
         gameHistory.WriteProcess(currentPlayer.getIntention());
         helper.Invalidate();
         ContinueDetect(currentPlayer.getIntention());
     }
 
-    public void PassIntention(int row,int col){
-        currentPlayer.setIntention(new Position(col,row));
+    public void PassIntention(int row, int col) {
+        currentPlayer.setIntention(new Position(col, row));
     }
-    public void PassIntention(Position intention){
+
+    public void PassIntention(Position intention) {
         currentPlayer.setIntention(intention);
     }
 
@@ -117,32 +126,34 @@ public class Game {
         }
     }
 
-    public void ContinueDetect(Position intention){
+    public void ContinueDetect(Position intention) {
         if (!isGameOver(intention)) {
             // 如果游戏未结束，则切换玩家
             switchPlayer();
             helper.SetTurns(getTurns());
-            if (!getCurrentPlayer().isHuman()){
+            if (!getCurrentPlayer().isHuman()) {
                 StartAi();
             }
-        }
-        else{
+        } else {
             GameFinish();
         }
     }
 
-    public void GameFinish(){
+    public void GameFinish() {
         gameHistory.cnt = turns;
-        gameHistory.name = player1.getName()+" vs "+player2.getName();
-        if (GetWinner()==null) gameHistory.result = "平局";
-        else if (GetWinner()==player1) gameHistory.result = "胜";
+        gameHistory.name = player1.getName() + " vs " + player2.getName();
+        if (GetWinner() == null) gameHistory.result = "平局";
+        else if (GetWinner() == player1) gameHistory.result = "胜";
         else gameHistory.result = "负";
         //获取当前时间
         Date date = new Date();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat("MM/dd-HH:mm");
         gameHistory.DATE_FORMAT = f.format(date);
+        helper.showInfoDialog(GetWinner().getName()+"胜！", "测试信息", "", (t) -> {
+            context.startActivity(new Intent(context, MainActivity.class));
+        }, "", t -> Restart());
         gameHistory.SubmitToSql();
-        helper.showInfoDialog("测试","测试信息","",null,"",t-> Restart());
+        Log.d(gameHistory.name, gameHistory.toString());
         //helper.showInfoDialog(GetWinner().getName(),t-> Restart());
     }
 
@@ -162,7 +173,7 @@ public class Game {
         return false;
     }
 
-    public void StartAi(){
+    public void StartAi() {
         aiThread = new AiThread();
         aiThread.start();
     }
@@ -172,6 +183,7 @@ public class Game {
         public void start() {
             super.start();
         }
+
         @SuppressLint("SetTextI18n")
         @Override
         public void run() {
@@ -180,14 +192,16 @@ public class Game {
             // Ai线程的逻辑
             AI ai = (AI) getCurrentPlayer();
             int[] move = ai.getBestMove(board);
-            Position intention = new Position(move[1],move[0]);
+            Position intention = new Position(move[1], move[0]);
             ai.game.PassIntention(intention);
             ai.game.RunATurn();
             Looper.loop();
         }
     }
 
-    public Player GetWinner(){return winner;}
+    public Player GetWinner() {
+        return winner;
+    }
 
     public Player getCurrentPlayer() {
         return currentPlayer;

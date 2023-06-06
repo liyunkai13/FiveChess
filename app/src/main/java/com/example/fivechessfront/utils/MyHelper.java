@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -37,13 +38,14 @@ public class MyHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE1_SQL = "create table " + TABLE_NAME_1 +
             "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, password text)";
     private static final String CREATE_TABLE2_SQL = "create table " + TABLE_NAME_2 +
-            "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text,matchName text,result CHAR(5), color CHAR(5), process String,cnt int,DATE_FORMAT String)";
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text,matchName String,result CHAR(5), color CHAR(5), process String,cnt int,DATE_FORMAT String)";
     public MyHelper(@Nullable Context context) {
         super(context, DB_NAME, null, VERSION);
         this.context = context;
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("MyHelper", "onCreate: " + CREATE_TABLE2_SQL);
         db.execSQL(CREATE_TABLE1_SQL);
         db.execSQL(CREATE_TABLE2_SQL);
     }

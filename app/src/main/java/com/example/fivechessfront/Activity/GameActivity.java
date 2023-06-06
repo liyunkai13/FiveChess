@@ -25,12 +25,12 @@ public class GameActivity extends AppCompatActivity {
     private GameUIHelper helper;
     private GameHistory gameHistory;
 
-    public void Init(){
+    public void Init() {
         setContentView(R.layout.activity_game);
         turnsView = findViewById(R.id.turnsView);
         /*初始化 ChessboardView*/
         chessboardView = findViewById(R.id.chessboard_view);
-        helper = new GameUIHelper(chessboardView,turnsView,this);
+        helper = new GameUIHelper(chessboardView, turnsView, this);
         gameHistory = new GameHistory(this);
     }
 
@@ -38,9 +38,19 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Init();
+        game = new Game(helper, gameHistory, this);
+
         //player2 = new AI("Ai", 2); // 玩家2是机器玩家
-        game = new Game(helper,gameHistory);
-        game.SetGameType(GameType.PlayerVsAi);
+        String mode = getIntent().getStringExtra("mode");
+        int difficultyValue = getIntent().getIntExtra("difficulty", 1);
+        switch (mode) {
+            case "ai":
+                game.SetGameType(GameType.PlayerVsAi,difficultyValue);
+                break;
+            case "people":
+                game.SetGameType(GameType.PlayerVsPlayer,0);
+                break;
+        }
         // 设置 ChessboardView 的 Board 实例
         chessboardView.setBoard(game.getBoard());
         // 设置 ChessboardView 的点击事件监听器
@@ -49,7 +59,7 @@ public class GameActivity extends AppCompatActivity {
             Log.d("ChessboardView", "点击坐标：x = " + x + ", y = " + y);
             Log.d("ChessboardView", "点击格子：row = " + row + ", col = " + col);
             if (game.getCurrentPlayer().isHuman()) {
-                game.PassIntention(row,col);
+                game.PassIntention(row, col);
                 game.RunATurn();
             }
         });

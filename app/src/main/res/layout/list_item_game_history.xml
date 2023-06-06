@@ -5,74 +5,68 @@
     android:background="@drawable/edittext_background"
     android:layout_gravity="center_horizontal"
     android:orientation="horizontal">
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/gameNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="GameName" />
+                android:text="GameName"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
             <TextView
                 android:id="@+id/dateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_gravity="center_vertical"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:text="Date" />
+                android:layout_marginStart="15dp"
+                android:text="Date"
+                android:textAppearance="?android:textAppearanceMedium" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/resultTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Result" />
+                android:text="Result"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
             <TextView
                 android:id="@+id/colorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_gravity="center_vertical"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:text="Color" />
+                android:layout_marginStart="15dp"
+                android:text="Color"
+                android:textAppearance="?android:textAppearanceMedium" />
+
             <TextView
                 android:id="@+id/cntTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_gravity="center_vertical"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:text="Count" />
-
+                android:layout_marginStart="15dp"
+                android:text="Count"
+                android:textAppearance="?android:textAppearanceMedium" />
 
 
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:layout_marginStart="60dp">
 
-        <Button
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="回放" />
-
-    </LinearLayout>
 
 </LinearLayout>

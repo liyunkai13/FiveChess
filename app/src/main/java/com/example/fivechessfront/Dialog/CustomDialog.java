@@ -49,8 +49,8 @@ public class CustomDialog extends Dialog {
             mDialog.addContentView(mLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             tvTitle = (TextView) mLayout.findViewById(R.id.tv_title);
-            tvWarning = (TextView) mLayout.findViewById(R.id.tv_warning);
-            tvInfo = (TextView) mLayout.findViewById(R.id.tv_info);
+            //tvWarning = (TextView) mLayout.findViewById(R.id.tv_warning);
+            //tvInfo = (TextView) mLayout.findViewById(R.id.tv_info);
             btnCancel = (Button) mLayout.findViewById(R.id.btn_cancel);
             btnConfirm = (Button) mLayout.findViewById(R.id.btn_confirm);
         }

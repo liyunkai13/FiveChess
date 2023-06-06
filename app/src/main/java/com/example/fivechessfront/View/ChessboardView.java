@@ -126,7 +126,7 @@ public class ChessboardView extends View {
                     matrix.postScale((float)(CELL_SIZE/3)/128, (float)(CELL_SIZE/3)/128);
                     Bitmap newBitMap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                     // 缩放原图
-                    canvas.drawBitmap(newBitMap,CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH)-45,CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH)-45,paint);
+                    canvas.drawBitmap(newBitMap,CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH)-20,CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH)-20,paint);
                     //canvas.drawCircle(CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH), CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH), (float)CELL_SIZE/3, paint);
                 }
             }
@@ -140,7 +140,7 @@ public class ChessboardView extends View {
                     matrix.postScale((float)(CELL_SIZE/3)/128, (float)(CELL_SIZE/3)/128);
                     Bitmap newBitMap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                     // 缩放原图
-                    canvas.drawBitmap(newBitMap,CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH)-45,CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH)-45,paint);
+                    canvas.drawBitmap(newBitMap,CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH) -20 ,CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH)-20,paint);
                     //canvas.drawCircle(CELL_SIZE + j * (CELL_SIZE+GRID_WIDTH), CELL_SIZE + i * (CELL_SIZE+GRID_WIDTH), (float)CELL_SIZE/3, paint);
                 }
             }

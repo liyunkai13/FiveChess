@@ -31,12 +31,10 @@ public class GameUIHelper {
         turnsView.invalidate();
     }
 
-    public void showInfoDialog(String waring, String info, String cancelText, View.OnClickListener cancelOnClick, String confirmText,
+    public void showInfoDialog(String result, String info, String cancelText, View.OnClickListener cancelOnClick, String confirmText,
                                   View.OnClickListener confirmOnClick) {
         CustomDialog.Builder builder = new CustomDialog.Builder(context);
-        builder.setTitle("提示");
-        builder.setWarning(waring);
-        builder.setInfo(info);
+        builder.setTitle(result);
         builder.setButtonCancel(cancelText, (View.OnClickListener) cancelOnClick);
         builder.setButtonConfirm(confirmText, (View.OnClickListener) confirmOnClick);
 

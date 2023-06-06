@@ -50,7 +50,7 @@
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/ai_button" />
 
         <Button
@@ -59,27 +59,37 @@
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
 
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/human_button" />
-        <Button
-            android:id="@+id/showHistoryButton"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:background="@color/boardColor"
-
-            android:text="历史记录"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"/>
+            >
+            <Button
+                android:id="@+id/showHistoryButton"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@color/boardColor"
 
-        <Button
-            android:id="@+id/exitButton"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:background="@color/boardColor"
+                android:text="历史记录"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="30dp"/>
 
-            android:text="退出"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"/>
+            <Button
+                android:id="@+id/exitButton"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@color/boardColor"
+
+                android:text="退出"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 
