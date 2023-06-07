@@ -98,7 +98,7 @@ class HistoryAdapter extends BaseAdapter {
         // 设置历史记录对象的数据到对应的视图
         gameNameTextView.setText(gameHistory.getName());
         resultTextView.setText(gameHistory.getResult());
-        if (Objects.equals(gameHistory.getResult(), "胜利"))
+        if (Objects.equals(gameHistory.getResult(), "胜"))
             resultTextView.setTextColor(ContextCompat.getColor(this.context, R.color.green));
         else
             resultTextView.setTextColor(ContextCompat.getColor(this.context, R.color.red));
