@@ -52,7 +52,7 @@ public class Game {
                 break;
             case PlayerVsAi:
                 player1 = new Human(name, this);
-                player2 = new AI(2, this);
+                player2 = new AI(difficulty, this);
                 break;
         }
     }
