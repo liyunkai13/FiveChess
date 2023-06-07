@@ -101,10 +101,11 @@ public class MyHelper extends SQLiteOpenHelper {
     //查询游戏对局所有信息
     public List<GameHistory> selectGameHistory(Account account) {
 
+        String sortOrder = "id DESC";
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_2, null,
                 "name = ?", new String[]{account.getName()},
-                null, null, null);
+                null, null, sortOrder);
         List<GameHistory> GameHistoryList = new ArrayList<>();
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -129,4 +130,134 @@ public class MyHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    //查询获胜的比赛记录
+    public List<GameHistory> selectGameHistoryWithWIN(Account account) {
+
+        String result = "胜";
+        String sortOrder = "id DESC";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME_2, null,
+                "name = ? result = ? ", new String[]{account.getName(),result},
+                null, null, sortOrder);
+        List<GameHistory> GameHistoryList = new ArrayList<>();
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("matchName"));
+                @SuppressLint("Range") String result1 = cursor.getString(cursor.getColumnIndex("result"));
+                @SuppressLint("Range") String color1 = cursor.getString(cursor.getColumnIndex("color"));
+                @SuppressLint("Range") String process1 = cursor.getString(cursor.getColumnIndex("process"));
+                @SuppressLint("Range") String cnt1 = cursor.getString(cursor.getColumnIndex("cnt"));
+                @SuppressLint("Range") String DATE_FORMAT1 = cursor.getString(cursor.getColumnIndex("DATE_FORMAT"));
+                GameHistory gameHistory = new GameHistory(context);
+                gameHistory.setName(name1);
+                gameHistory.setColor(color1);
+                gameHistory.setProcess(process1);
+                gameHistory.setCnt(Integer.parseInt(cnt1));
+                gameHistory.setResult(result1);
+                gameHistory.setDATE_FORMAT(DATE_FORMAT1);
+                GameHistoryList.add(gameHistory);
+            }
+            cursor.close();
+            return GameHistoryList;
+        }
+        return null;
+    }
+    //获取输掉的比赛记录
+    public List<GameHistory> selectGameHistoryWithLOSE(Account account) {
+
+        String result = "负";
+        String sortOrder = "id DESC";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME_2, null,
+                "name = ? result = ? ", new String[]{account.getName(),result},
+                null, null, sortOrder);
+        List<GameHistory> GameHistoryList = new ArrayList<>();
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("matchName"));
+                @SuppressLint("Range") String result1 = cursor.getString(cursor.getColumnIndex("result"));
+                @SuppressLint("Range") String color1 = cursor.getString(cursor.getColumnIndex("color"));
+                @SuppressLint("Range") String process1 = cursor.getString(cursor.getColumnIndex("process"));
+                @SuppressLint("Range") String cnt1 = cursor.getString(cursor.getColumnIndex("cnt"));
+                @SuppressLint("Range") String DATE_FORMAT1 = cursor.getString(cursor.getColumnIndex("DATE_FORMAT"));
+                GameHistory gameHistory = new GameHistory(context);
+                gameHistory.setName(name1);
+                gameHistory.setColor(color1);
+                gameHistory.setProcess(process1);
+                gameHistory.setCnt(Integer.parseInt(cnt1));
+                gameHistory.setResult(result1);
+                gameHistory.setDATE_FORMAT(DATE_FORMAT1);
+                GameHistoryList.add(gameHistory);
+            }
+            cursor.close();
+            return GameHistoryList;
+        }
+        return null;
+    }
+
+    //使用黑棋的比赛
+    public List<GameHistory> selectGameHistoryWithBLACK(Account account) {
+
+        String color = "执黑";
+        String sortOrder = "id DESC";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME_2, null,
+                "name = ? color = ? ", new String[]{account.getName(),color},
+                null, null, sortOrder);
+        List<GameHistory> GameHistoryList = new ArrayList<>();
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("matchName"));
+                @SuppressLint("Range") String result1 = cursor.getString(cursor.getColumnIndex("result"));
+                @SuppressLint("Range") String color1 = cursor.getString(cursor.getColumnIndex("color"));
+                @SuppressLint("Range") String process1 = cursor.getString(cursor.getColumnIndex("process"));
+                @SuppressLint("Range") String cnt1 = cursor.getString(cursor.getColumnIndex("cnt"));
+                @SuppressLint("Range") String DATE_FORMAT1 = cursor.getString(cursor.getColumnIndex("DATE_FORMAT"));
+                GameHistory gameHistory = new GameHistory(context);
+                gameHistory.setName(name1);
+                gameHistory.setColor(color1);
+                gameHistory.setProcess(process1);
+                gameHistory.setCnt(Integer.parseInt(cnt1));
+                gameHistory.setResult(result1);
+                gameHistory.setDATE_FORMAT(DATE_FORMAT1);
+                GameHistoryList.add(gameHistory);
+            }
+            cursor.close();
+            return GameHistoryList;
+        }
+        return null;
+    }
+
+    //使用白棋的比赛
+    public List<GameHistory> selectGameHistoryWithWHITE(Account account) {
+
+        String color = "执白";
+        String sortOrder = "id DESC";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME_2, null,
+                "name = ? color = ? ", new String[]{account.getName(),color},
+                null, null, sortOrder);
+        List<GameHistory> GameHistoryList = new ArrayList<>();
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") String name1 = cursor.getString(cursor.getColumnIndex("matchName"));
+                @SuppressLint("Range") String result1 = cursor.getString(cursor.getColumnIndex("result"));
+                @SuppressLint("Range") String color1 = cursor.getString(cursor.getColumnIndex("color"));
+                @SuppressLint("Range") String process1 = cursor.getString(cursor.getColumnIndex("process"));
+                @SuppressLint("Range") String cnt1 = cursor.getString(cursor.getColumnIndex("cnt"));
+                @SuppressLint("Range") String DATE_FORMAT1 = cursor.getString(cursor.getColumnIndex("DATE_FORMAT"));
+                GameHistory gameHistory = new GameHistory(context);
+                gameHistory.setName(name1);
+                gameHistory.setColor(color1);
+                gameHistory.setProcess(process1);
+                gameHistory.setCnt(Integer.parseInt(cnt1));
+                gameHistory.setResult(result1);
+                gameHistory.setDATE_FORMAT(DATE_FORMAT1);
+                GameHistoryList.add(gameHistory);
+            }
+            cursor.close();
+            return GameHistoryList;
+        }
+        return null;
+    }
 }
