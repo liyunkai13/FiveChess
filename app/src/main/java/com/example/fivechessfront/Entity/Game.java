@@ -6,13 +6,15 @@ import android.content.Intent;
 import android.os.Looper;
 import android.util.Log;
 
-import com.example.fivechessfront.Activity.GameActivity;
 import com.example.fivechessfront.Activity.MainActivity;
+import com.example.fivechessfront.Entity.Impl.CyberHuman;
 import com.example.fivechessfront.Enums.GameType;
+import com.example.fivechessfront.Enums.PlayerType;
+import com.example.fivechessfront.Network.Client;
 import com.example.fivechessfront.UIHelper.GameUIHelper;
-import com.example.fivechessfront.utils.AI;
+import com.example.fivechessfront.Entity.Impl.AI;
 import com.example.fivechessfront.utils.AccountManager;
-import com.example.fivechessfront.utils.Human;
+import com.example.fivechessfront.Entity.Impl.Human;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,13 +56,18 @@ public class Game {
                 player1 = new Human(name, this);
                 player2 = new AI(difficulty, this);
                 break;
+            case PlayerVsInternet:
+                player1 = new Human(name,this);
+                player2 = new CyberHuman(this);
+                Client.getInstance().setCyberHuman((CyberHuman) player2);
+                break;
         }
     }
 
 
     public void Start() {
         assignRandomColors();// 随机分配玩家的棋子颜色
-        if (!getCurrentPlayer().isHuman()) {
+        if (getCurrentPlayer().getPlayerType() == PlayerType.AI) {
             Log.d("Game", "开启了ai");
             StartAi();
         }
@@ -79,6 +86,9 @@ public class Game {
 
     public void RunATurn() {
         currentPlayer.Drops();
+        if(player2.getPlayerType() == PlayerType.CyberHuman&&currentPlayer== player1){
+            Client.getInstance().SendPosition(currentPlayer.getIntention());
+        }
         gameHistory.WriteProcess(currentPlayer.getIntention());
         helper.Invalidate();
         ContinueDetect(currentPlayer.getIntention());
@@ -132,7 +142,7 @@ public class Game {
             // 如果游戏未结束，则切换玩家
             switchPlayer();
             helper.SetTurns(getTurns());
-            if (!getCurrentPlayer().isHuman()) {
+            if (getCurrentPlayer().getPlayerType() == PlayerType.AI) {
                 StartAi();
             }
         } else {

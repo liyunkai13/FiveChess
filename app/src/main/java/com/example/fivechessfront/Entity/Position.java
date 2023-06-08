@@ -1,8 +1,8 @@
 package com.example.fivechessfront.Entity;
 
 public class Position {
-    int col;
-    int row;
+    public int col;
+    public int row;
 
     public Position(int col, int row) {
         this.col = col;

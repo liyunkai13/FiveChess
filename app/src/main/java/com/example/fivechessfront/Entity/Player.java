@@ -1,15 +1,17 @@
 package com.example.fivechessfront.Entity;
 
+import com.example.fivechessfront.Enums.PlayerType;
+
 public class Player {
     public final Game game;
     private final String name;
-    private final boolean isHuman;
+    private final PlayerType playerType;
     private Position intention;
     private int pieceType;     // 棋子类型, 1为黑棋, 2为白棋
 
-    public Player(String name, boolean isHuman, Game game) {
+    public Player(String name, PlayerType playerType, Game game) {
         this.name = name;
-        this.isHuman = isHuman;
+        this.playerType = playerType;
         this.game = game;
     }
 
@@ -31,8 +33,8 @@ public class Player {
         return intention;
     }
 
-    public boolean isHuman() {
-        return isHuman;
+    public PlayerType getPlayerType() {
+        return playerType;
     }
     public int getPieceType() {
         return pieceType;   // 1为黑棋, 2为白棋

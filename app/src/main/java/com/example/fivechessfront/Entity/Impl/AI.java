@@ -1,10 +1,9 @@
-package com.example.fivechessfront.utils;
-
-import android.util.Log;
+package com.example.fivechessfront.Entity.Impl;
 
 import com.example.fivechessfront.Entity.Board;
 import com.example.fivechessfront.Entity.Game;
 import com.example.fivechessfront.Entity.Player;
+import com.example.fivechessfront.Enums.PlayerType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ public class AI extends Player {
     private int maxDepth; // 最大搜索深度
 
     public AI(int maxDepth, Game game) {
-        super("AI",false,game);
+        super("AI", PlayerType.AI,game);
         this.maxDepth = maxDepth;
     }
 

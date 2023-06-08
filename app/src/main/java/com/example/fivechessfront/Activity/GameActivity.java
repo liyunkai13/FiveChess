@@ -1,22 +1,19 @@
 package com.example.fivechessfront.Activity;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fivechessfront.Entity.Board;
 import com.example.fivechessfront.Entity.Game;
 import com.example.fivechessfront.Entity.GameHistory;
-import com.example.fivechessfront.Entity.Player;
 import com.example.fivechessfront.Enums.GameType;
+import com.example.fivechessfront.Enums.PlayerType;
+import com.example.fivechessfront.Network.Client;
 import com.example.fivechessfront.R;
 import com.example.fivechessfront.UIHelper.GameUIHelper;
 import com.example.fivechessfront.View.ChessboardView;
-import com.example.fivechessfront.utils.AI;
-import com.example.fivechessfront.utils.MyHelper;
 
 public class GameActivity extends AppCompatActivity {
     private Game game;
@@ -36,16 +33,17 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Client client = Client.getInstance();
         super.onCreate(savedInstanceState);
         Init();
         game = new Game(helper, gameHistory, this);
-
+        client.Start();
         //player2 = new AI("Ai", 2); // 玩家2是机器玩家
         String mode = getIntent().getStringExtra("mode");
         int difficultyValue = getIntent().getIntExtra("difficulty", 1);
         switch (mode) {
             case "ai":
-                game.SetGameType(GameType.PlayerVsAi,difficultyValue);
+                game.SetGameType(GameType.PlayerVsInternet,difficultyValue);
                 break;
             case "people":
                 game.SetGameType(GameType.PlayerVsPlayer,0);
@@ -58,7 +56,7 @@ public class GameActivity extends AppCompatActivity {
             // 处理点击坐标的逻辑
             Log.d("ChessboardView", "点击坐标：x = " + x + ", y = " + y);
             Log.d("ChessboardView", "点击格子：row = " + row + ", col = " + col);
-            if (game.getCurrentPlayer().isHuman()) {
+            if (game.getCurrentPlayer().getPlayerType() == PlayerType.Human) {
                 game.PassIntention(row, col);
                 game.RunATurn();
             }
