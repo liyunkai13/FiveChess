@@ -58,7 +58,6 @@
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-
             android:layout_marginTop="10dp"
             android:background="@drawable/human_button" />
         <LinearLayout
@@ -73,7 +72,6 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:background="@color/boardColor"
-
                 android:text="历史记录"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"

@@ -3,16 +3,18 @@ package com.example.fivechessfront.Entity;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.example.fivechessfront.utils.AccountManager;
 import com.example.fivechessfront.utils.MyHelper;
 
-import java.util.Date;
+import java.io.Serializable;
 
 //存储游戏记录（涵盖所有对局:账户 输赢情况 棋子颜色 比赛记录）
 //eg: 123 WIN black 132456765373(每两个数字表示一个棋子位置，黑子先手，黑白交替)
 //name text, result CHAR(5), color CHAR(5), process String
-public class GameHistory {
-    final MyHelper sqlHelper;
+public class GameHistory implements Serializable {
+    final transient MyHelper sqlHelper;
     String name;//对局名称
     String result;//比赛输赢
     String color;//使用棋子颜色
@@ -73,6 +75,7 @@ public class GameHistory {
         Log.d("GameHistory", "SubmitToSql: "+ this);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "GameHistory{" +

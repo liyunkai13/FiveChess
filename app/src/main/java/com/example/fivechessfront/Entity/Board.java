@@ -18,6 +18,15 @@ public class Board implements Cloneable{
         // 放置棋子的逻辑
         boardArray[row][col] = player.getPieceType();   // 1为黑棋, 2为白棋
     }
+    public void placePiece(int row, int col,int pieceType) {
+        // 放置棋子的逻辑
+        boardArray[row][col] = pieceType;   // 1为黑棋, 2为白棋
+    }
+    //取消指定位置的棋子
+    public void cancelPiece(int row, int col) {
+        // 放置棋子的逻辑
+        boardArray[row][col] = EMPTY;   // 1为黑棋, 2为白棋
+    }
 
     public boolean isLocValid(int row, int col) {
         // 检查指定位置是否有效的逻辑
@@ -25,8 +34,8 @@ public class Board implements Cloneable{
     }
 
     public void ResetBoard(){
-        for (int i = 0; i < boardArray.length; i++) {
-            Arrays.fill(boardArray[i], 0);
+        for (int[] ints : boardArray) {
+            Arrays.fill(ints, 0);
         }
     }
 
@@ -110,11 +119,8 @@ public class Board implements Cloneable{
                 break;
             }
         }
-        if (count >= 5) {
-            return true; // 右上到左下连珠
-        }
-
-        return false; // 没有五子连珠
+        return count >= 5; // 右上到左下连珠
+// 没有五子连珠
     }
     //判断是否平局
     public boolean isFull() {

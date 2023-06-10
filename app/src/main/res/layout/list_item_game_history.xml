@@ -1,18 +1,19 @@
 <!-- list_item_game_history.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
-    android:layout_height="80dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/edittext_background"
+    android:layout_marginHorizontal="7dp"
     android:layout_gravity="center_horizontal"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="380dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
@@ -26,48 +27,60 @@
 
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/resultTextView"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Result"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/colorTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="15dp"
-                android:text="Color"
-                android:textAppearance="?android:textAppearanceMedium" />
+                <TextView
+                    android:id="@+id/resultTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Result"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <TextView
-                android:id="@+id/cntTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="15dp"
-                android:text="Count"
-                android:textAppearance="?android:textAppearanceMedium" />
-            <TextView
-                android:id="@+id/dateTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
-                android:layout_marginStart="15dp"
-                android:text="Date"
-                android:textAppearance="?android:textAppearanceMedium" />
+                <TextView
+                    android:id="@+id/colorTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:text="Color"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/cntTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:text="Count"
+                    android:textAppearance="?android:textAppearanceMedium" />
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginStart="15dp"
+                    android:text="Date"
+                    android:textAppearance="?android:textAppearanceMedium" />
 
 
-        </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
     </LinearLayout>
-
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/to_play"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"/>
 
 </LinearLayout>
