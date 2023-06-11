@@ -56,6 +56,11 @@ public class RoomStateMessage implements IMessage {
     }
 
     public static RoomStateMessage Parse(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<bytes.length;i++){
+            sb.append(bytes[i]+",");
+        }
+        System.out.println(sb.toString());
         RoomStateMessage message = null;
         ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
         ModifyReader reader = new ModifyReader(stream);

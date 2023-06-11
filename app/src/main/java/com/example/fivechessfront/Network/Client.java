@@ -23,6 +23,7 @@ public class Client {
     MessageHandler messageHandler;
     CyberHuman cyberHuman;
     Timer timer;
+    int roomID;
     private static Client mInstance;
     public static Client getInstance(){
         if(mInstance == null) mInstance = new Client();
@@ -33,6 +34,7 @@ public class Client {
         messageFactory = new MessageFactory();
         timer = new Timer();
         messageHandler = new MessageHandler(udpHandler, message -> {
+            System.out.println(message.getMessageType().toString());
             switch (message.getMessageType()){
                 case Position : {
                     setCyberHumanMove(message);
@@ -54,6 +56,7 @@ public class Client {
         Log.d("Client",roomStateMessage.toString());
         Game game = cyberHuman.game;
         game.SetInternetRoomInfo(roomStateMessage.playerAName,roomStateMessage.playerBName,roomStateMessage.firstIsBlack);
+        roomID = roomStateMessage.roomID;
     }
     public void setCyberHuman(CyberHuman cyberHuman){
         this.cyberHuman = cyberHuman;
@@ -82,6 +85,6 @@ public class Client {
     }
     public void SendPosition(Position position){
         String name = AccountManager.getInstance().getAccount().getName();
-        udpHandler.SendMessage(new PositionMessage(12,name,position.col,position.row));
+        udpHandler.SendMessage(new PositionMessage(roomID,name,position.col,position.row));
     }
 }

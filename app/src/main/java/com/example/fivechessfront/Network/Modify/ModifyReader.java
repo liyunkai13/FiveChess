@@ -3,6 +3,8 @@ package com.example.fivechessfront.Network.Modify;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class ModifyReader extends DataInputStream {
     /**
@@ -15,10 +17,17 @@ public class ModifyReader extends DataInputStream {
         super(in);
     }
     public int readCSharpInt() throws IOException {
-        int ch1 = readByte();
-        int ch2 = readByte();
-        int ch3 = readByte();
-        int ch4 = readByte();
-        return ((ch4 << 24) + (ch3 << 16) + (ch2 << 8) + (ch1));
+        byte[] bytes = new byte[4];
+        ByteBuffer buffer = ByteBuffer.wrap(bytes);
+        byte ch1 = readByte();
+        bytes[0] = ch1;
+        byte ch2 = readByte();
+        bytes[1] = ch2;
+        byte ch3 = readByte();
+        bytes[2] = ch3;
+        byte ch4 = readByte();
+        bytes[3] = ch4;
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        return buffer.getInt();
     }
 }
