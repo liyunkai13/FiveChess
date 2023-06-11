@@ -3,6 +3,7 @@ package com.example.fivechessfront.Network.Message;
 import com.example.fivechessfront.Network.Message.Implement.HeartBeatMessage;
 import com.example.fivechessfront.Network.Message.Implement.PositionMessage;
 import com.example.fivechessfront.Network.Message.Implement.RoomOperationMessage;
+import com.example.fivechessfront.Network.Message.Implement.RoomStateMessage;
 
 public class MessageFactory {
     public PositionMessage GetTextMessage(String content, long targetID, boolean isGroup, String sourceToken) {
@@ -29,6 +30,8 @@ public class MessageFactory {
                 return HeartBeatMessage.Parse(bytes);
             case RoomOperation:
                 return RoomOperationMessage.Parse(bytes);
+            case RoomState:
+                return RoomStateMessage.Parse(bytes);
             default:
                 break;
         }

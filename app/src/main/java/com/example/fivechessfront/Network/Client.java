@@ -1,10 +1,14 @@
 package com.example.fivechessfront.Network;
 
+import android.util.Log;
+
+import com.example.fivechessfront.Entity.Game;
 import com.example.fivechessfront.Entity.Impl.CyberHuman;
 import com.example.fivechessfront.Entity.Position;
 import com.example.fivechessfront.Network.Message.IMessage;
 import com.example.fivechessfront.Network.Message.Implement.PositionMessage;
 import com.example.fivechessfront.Network.Message.Implement.RoomOperationMessage;
+import com.example.fivechessfront.Network.Message.Implement.RoomStateMessage;
 import com.example.fivechessfront.Network.Message.MessageFactory;
 import com.example.fivechessfront.Network.Message.MessageHandler;
 import com.example.fivechessfront.Network.Udp.UdpHandler;
@@ -38,8 +42,18 @@ public class Client {
                     System.out.println(message.getSourceName());
                     break;
                 }
+                case RoomState:{
+                    SetRoomInfo(message);
+                }
             }
         });
+    }
+    public void SetRoomInfo(IMessage message){
+        if(cyberHuman == null) return;
+        RoomStateMessage roomStateMessage = (RoomStateMessage) message;
+        Log.d("Client",roomStateMessage.toString());
+        Game game = cyberHuman.game;
+        game.SetInternetRoomInfo(roomStateMessage.playerAName,roomStateMessage.playerBName,roomStateMessage.firstIsBlack);
     }
     public void setCyberHuman(CyberHuman cyberHuman){
         this.cyberHuman = cyberHuman;
@@ -59,11 +73,12 @@ public class Client {
             }
         }, 0, 1000);
         messageHandler.Start();
+        udpHandler.SendMessage(messageFactory.GetHeartBeatMessage(name));
         RoomOperationMessage joinRoomMessage = new RoomOperationMessage(name,12,"Join");
         udpHandler.SendMessage(joinRoomMessage);
     }
     public void SendPosition(Position position){
         String name = AccountManager.getInstance().getAccount().getName();
-        udpHandler.SendMessage(new PositionMessage("",12,name,position.col,position.row));
+        udpHandler.SendMessage(new PositionMessage(12,name,position.col,position.row));
     }
 }

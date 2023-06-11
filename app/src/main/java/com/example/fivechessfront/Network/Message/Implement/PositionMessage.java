@@ -8,15 +8,13 @@ import com.example.fivechessfront.Network.Modify.ModifyReader;
 import java.io.*;
 
 public class PositionMessage implements IPassedMessage {
-    public PositionMessage(String targetName, int roomID, String sourceName, int positionX,int positionY) {
-        this.targetName = targetName;
+    public PositionMessage(int roomID, String sourceName, int positionX,int positionY) {
         this.roomID = roomID;
         messageType = MessageType.Position;
         this.sourceName = sourceName;
         this.positionX = positionX;
         this.positionY = positionY;
     }
-    private String targetName;
     private String sourceName;
     private MessageType messageType;
     private int contentLength;
@@ -49,14 +47,6 @@ public class PositionMessage implements IPassedMessage {
         this.sourceName = sourceName;
     }
     @Override
-    public String getTargetName() {
-        return targetName;
-    }
-    @Override
-    public void setTargetName(String targetName) {
-        this.targetName = targetName;
-    }
-    @Override
     public int getRoomID() {
         return roomID;
     }
@@ -71,7 +61,6 @@ public class PositionMessage implements IPassedMessage {
         try {
             writer.writeByte(messageType.ordinal());
             writer.writeUTF(sourceName);
-            writer.writeUTF(targetName);
             writer.writeInt(roomID);
             writer.writeInt(positionX);
             writer.writeInt(positionY);
@@ -90,12 +79,11 @@ public class PositionMessage implements IPassedMessage {
         try {
             MessageType type = MessageType.values()[reader.readByte()];
             String sn = reader.readUTF();
-            String tn = reader.readUTF();
             int rid = reader.readCSharpInt();
             int px = reader.readCSharpInt();
             int py = reader.readCSharpInt();
             int length = reader.readCSharpInt();
-            message = new PositionMessage(tn,rid,sn,px,py);
+            message = new PositionMessage(rid,sn,px,py);
         } catch (IOException e) {
             e.printStackTrace();
         }

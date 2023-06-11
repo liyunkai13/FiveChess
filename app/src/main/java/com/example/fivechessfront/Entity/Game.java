@@ -35,6 +35,7 @@ public class Game {
     private int turns = 0;
     private GameUIHelper helper;
     private GameHistory gameHistory;
+    private GameType type;
 
     private Context context;
 
@@ -46,6 +47,7 @@ public class Game {
     }
 
     public void SetGameType(GameType type,int difficulty) {
+        this.type = type;
         String name = AccountManager.getInstance().getAccount().name;
         switch (type) {
             case PlayerVsPlayer:
@@ -71,9 +73,11 @@ public class Game {
             Log.d("Game", "开启了ai");
             StartAi();
         }
-        if (player1.getPieceType() == 1) gameHistory.setColor("执黑");//在数据库中插入棋子的颜色
-        else gameHistory.setColor("执白");
-        gameHistory.name = player1.getName() + " vs " + player2.getName();
+        if(type != GameType.PlayerVsInternet) {
+            if (player1.getPieceType() == 1) gameHistory.setColor("执黑");//在数据库中插入棋子的颜色
+            else gameHistory.setColor("执白");
+            gameHistory.name = player1.getName() + " vs " + player2.getName();
+        }
     }
 
     public void Restart() {
@@ -98,6 +102,24 @@ public class Game {
         currentPlayer.setIntention(new Position(col, row));
     }
 
+    public void SetInternetRoomInfo(String aName,String bName,boolean AIsBlack){
+        if(player1.getName().equals(aName)^AIsBlack){
+            player1.setPieceType(2);
+            player2.setPieceType(1);
+            currentPlayer = player2;
+        }
+        else{
+            player1.setPieceType(1);
+            player2.setPieceType(2);
+            currentPlayer = player1;
+        }
+        if(player1.getName().equals(aName)) player2.setName(bName);
+        else player2.setName(aName);
+        if (player1.getPieceType() == 1) gameHistory.setColor("执黑");//在数据库中插入棋子的颜色
+        else gameHistory.setColor("执白");
+        gameHistory.name = player1.getName() + " vs " + player2.getName();
+    }
+
     public void PassIntention(Position intention) {
         currentPlayer.setIntention(intention);
     }
@@ -108,11 +130,12 @@ public class Game {
     private void assignRandomColors() {
         // 随机分配玩家的棋子颜色的逻辑, 1为黑棋, 2为白棋
         //黑子先手
+        if(type == GameType.PlayerVsInternet){ currentPlayer = player2;return;}
         Random random = new Random();
         if (random.nextBoolean()) {
-            player1.setPieceType(1);
-            player2.setPieceType(2);
-            currentPlayer = player1;
+            player1.setPieceType(2);
+            player2.setPieceType(1);
+            currentPlayer = player2;
             Log.d("黑子先行", "player1");
 
         } else {

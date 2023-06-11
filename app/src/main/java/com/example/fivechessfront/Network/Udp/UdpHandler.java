@@ -2,7 +2,6 @@ package com.example.fivechessfront.Network.Udp;
 
 import com.example.fivechessfront.Network.Message.IMessage;
 import com.example.fivechessfront.Network.Message.MessageFactory;
-import com.example.fivechessfront.Network.UDPService;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -45,7 +44,7 @@ public class UdpHandler {
     }
 
     public IMessage ReceiveMessage() {
-        byte[] responseBytes = new byte[UDPService.MAX_BYTES];
+        byte[] responseBytes = new byte[4096];
         DatagramPacket responsePacket = new DatagramPacket(responseBytes, responseBytes.length);
         try {
             socket.receive(responsePacket);

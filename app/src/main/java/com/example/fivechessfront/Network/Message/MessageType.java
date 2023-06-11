@@ -5,5 +5,6 @@ public enum MessageType
     None,
     Position,
     HeartBeat,
-    RoomOperation
+    RoomOperation,
+    RoomState
 }

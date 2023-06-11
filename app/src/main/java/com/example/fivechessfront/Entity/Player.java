@@ -4,7 +4,7 @@ import com.example.fivechessfront.Enums.PlayerType;
 
 public class Player {
     public final Game game;
-    private final String name;
+    private String name;
     private final PlayerType playerType;
     private Position intention;
     private int pieceType;     // 棋子类型, 1为黑棋, 2为白棋
@@ -23,6 +23,9 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setIntention(Position intention) {
