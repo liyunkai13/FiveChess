@@ -1,15 +1,18 @@
 package com.example.fivechessfront.Activity;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.example.fivechessfront.Entity.Account;
@@ -21,7 +24,7 @@ import com.example.fivechessfront.utils.MyHelper;
 import java.util.List;
 import java.util.Objects;
 
-public class HistoryActivity extends Activity {
+public class HistoryActivity extends AppCompatActivity {
     private MyHelper myHelper;
 
     @Override
@@ -37,6 +40,11 @@ public class HistoryActivity extends Activity {
 
         // 创建适配器
         HistoryAdapter adapter = new HistoryAdapter(this, gameHistoryList);
+        //获取/设置toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("历史记录");
+
 
         // 获取ListView
         ListView listView = findViewById(R.id.listView);
@@ -51,7 +59,7 @@ public class HistoryActivity extends Activity {
     }
 }
 class HistoryAdapter extends BaseAdapter {
-    private Context context;
+    private final Context context;
     private final List<GameHistory> gameHistoryList;
     private final LayoutInflater inflater;
 
@@ -94,6 +102,13 @@ class HistoryAdapter extends BaseAdapter {
         TextView colorTextView = convertView.findViewById(R.id.colorTextView);
         TextView cntTextView = convertView.findViewById(R.id.cntTextView);
         TextView dateTextView = convertView.findViewById(R.id.dateTextView);
+        ImageButton imageButton = convertView.findViewById(R.id.imageButton);
+        //设置按钮点击事件
+        imageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(context, HistoryDetailsActivity.class);
+            intent.putExtra("gameHistory", gameHistory);
+            context.startActivity(intent);
+        });
 
         // 设置历史记录对象的数据到对应的视图
         gameNameTextView.setText(gameHistory.getName());
