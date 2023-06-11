@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 GameDifficulty selectedDifficulty = (GameDifficulty) difficultySpinner.getSelectedItem();
                 // 创建Intent并传递选择的难度值
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("difficulty", selectedDifficulty.getValue());
                 intent.putExtra("mode", "ai");
                 // 启动GameActivity
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("mode", "people");
                 startActivity(intent);
             }
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onPositiveClick() {
                         //TODO: 看看这里可不可以直接跳转到GameActivity，传递roomID参数
                         Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("roomID", dialog.getRoomID());
                         intent.putExtra("mode", "internet");
                         // 启动GameActivity
