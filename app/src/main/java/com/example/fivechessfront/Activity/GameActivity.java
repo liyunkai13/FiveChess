@@ -43,10 +43,13 @@ public class GameActivity extends AppCompatActivity {
         int difficultyValue = getIntent().getIntExtra("difficulty", 1);
         switch (mode) {
             case "ai":
-                game.SetGameType(GameType.PlayerVsInternet,difficultyValue);
+                game.SetGameType(GameType.PlayerVsAi,difficultyValue);
                 break;
             case "people":
                 game.SetGameType(GameType.PlayerVsPlayer,0);
+                break;
+            case "internet":
+                game.SetGameType(GameType.PlayerVsInternet,0);
                 break;
         }
         // 设置 ChessboardView 的 Board 实例

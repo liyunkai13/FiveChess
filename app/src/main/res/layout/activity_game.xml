@@ -21,7 +21,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:background="@drawable/turns_back"
+            android:background="@drawable/btn_red"
             android:gravity="center"
             android:text="回合数:0"
             android:textSize="20sp"
