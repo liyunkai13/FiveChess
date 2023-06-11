@@ -37,7 +37,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Init();
         game = new Game(helper, gameHistory, this);
-        client.Start();
         //player2 = new AI("Ai", 2); // 玩家2是机器玩家
         String mode = getIntent().getStringExtra("mode");
         int difficultyValue = getIntent().getIntExtra("difficulty", 1);
@@ -50,6 +49,7 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case "internet":
                 game.SetGameType(GameType.PlayerVsInternet,0);
+                client.Start();
                 break;
         }
         // 设置 ChessboardView 的 Board 实例
