@@ -140,12 +140,12 @@ public class HistoryDetailsActivity extends AppCompatActivity {
     }
     //下一个落子
     public void nextDrop() {
-        if (currentIndex < Intentions.size()-1) {
+        if (currentIndex < Intentions.size()) {
             int [] intention = Intentions.get(currentIndex);
             board.placePiece(intention[0],intention[1],currentIndex % 2 == 0 ? 1 : 2);
             chessboardView.postInvalidate();
-            textView.setText("回合数："+currentIndex);
             currentIndex++;
+            textView.setText("回合数："+currentIndex);
         }
 
     }

@@ -38,7 +38,7 @@ public class MyHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE1_SQL = "create table " + TABLE_NAME_1 +
             "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, password text)";
     private static final String CREATE_TABLE2_SQL = "create table " + TABLE_NAME_2 +
-            "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text,matchName String,result CHAR(5), color CHAR(5), process String,cnt int,DATE_FORMAT String)";
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, name text,matchName String,result CHAR(5), color CHAR(5), process Text,cnt int,DATE_FORMAT String)";
     public MyHelper(@Nullable Context context) {
         super(context, DB_NAME, null, VERSION);
         this.context = context;
