@@ -77,6 +77,7 @@ public class Game {
             if (player1.getPieceType() == 1) gameHistory.setColor("执黑");//在数据库中插入棋子的颜色
             else gameHistory.setColor("执白");
             gameHistory.name = player1.getName() + " vs " + player2.getName();
+            helper.SetName(currentPlayer.getName());
         }
     }
 
@@ -118,6 +119,7 @@ public class Game {
         if (player1.getPieceType() == 1) gameHistory.setColor("执黑");//在数据库中插入棋子的颜色
         else gameHistory.setColor("执白");
         gameHistory.name = player1.getName() + " vs " + player2.getName();
+        helper.SetName(currentPlayer.getName());
     }
 
     public void PassIntention(Position intention) {
@@ -158,6 +160,7 @@ public class Game {
             currentPlayer = player1;
             Log.d("currentPlayer", "player1,该你啦！");
         }
+        helper.SetName(currentPlayer.getName());
     }
 
     public void ContinueDetect(Position intention) {

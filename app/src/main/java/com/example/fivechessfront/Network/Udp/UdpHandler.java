@@ -16,7 +16,7 @@ public class UdpHandler {
     public UdpHandler() {
         try {
             socket = new DatagramSocket();
-            address = InetAddress.getByName("10.0.2.2");
+            address = InetAddress.getByName("8.130.104.12");
             factory = new MessageFactory();
         } catch (Exception ignored) {
 

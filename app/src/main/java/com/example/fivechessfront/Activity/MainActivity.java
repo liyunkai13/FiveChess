@@ -1,17 +1,14 @@
 package com.example.fivechessfront.Activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.example.fivechessfront.Entity.GameHistory;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.fivechessfront.Enums.GameDifficulty;
 import com.example.fivechessfront.R;
 import com.example.fivechessfront.View.CreateRoomDialog;
@@ -82,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         //TODO: 看看这里可不可以直接跳转到GameActivity，传递roomID参数
                         Intent intent = new Intent(MainActivity.this, GameActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("roomID", dialog.getRoomID());
+                        intent.putExtra("roomID", Integer.parseInt(dialog.getRoomID()));
                         intent.putExtra("mode", "internet");
                         // 启动GameActivity
                         startActivity(intent);

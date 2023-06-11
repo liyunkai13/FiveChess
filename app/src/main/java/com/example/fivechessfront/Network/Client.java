@@ -74,7 +74,10 @@ public class Client {
         }, 0, 1000);
         messageHandler.Start();
         udpHandler.SendMessage(messageFactory.GetHeartBeatMessage(name));
-        RoomOperationMessage joinRoomMessage = new RoomOperationMessage(name,12,"Join");
+    }
+    public void JoinRoom(int roomID){
+        String name = AccountManager.getInstance().getAccount().getName();
+        RoomOperationMessage joinRoomMessage = new RoomOperationMessage(name,roomID,"Join");
         udpHandler.SendMessage(joinRoomMessage);
     }
     public void SendPosition(Position position){

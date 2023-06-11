@@ -3,7 +3,6 @@ package com.example.fivechessfront.UIHelper;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
@@ -12,18 +11,19 @@ import com.example.fivechessfront.Dialog.CustomDialog;
 import com.example.fivechessfront.View.ChessboardView;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class GameUIHelper {
     private ChessboardView chessboardView;
     private TextView turnsView;
+    private TextView nameView;
     AlertDialog.Builder builder;
     private Context context;
 
-    public GameUIHelper(ChessboardView chessboardView, TextView turnsView, Context context) {
+    public GameUIHelper(ChessboardView chessboardView, TextView turnsView,TextView nameView, Context context) {
         this.chessboardView = chessboardView;
         this.turnsView = turnsView;
         this.context = context;
+        this.nameView = nameView;
         builder = new AlertDialog.Builder(context);
     }
     public void Invalidate(){
@@ -57,6 +57,13 @@ public class GameUIHelper {
         } else { // 非UI主线程
             turnsView.post(() -> turnsView.setText("回合数："+turns));
         }
-
+    }
+    @SuppressLint("SetTextI18n")
+    public void SetName(String name){
+        if (Looper.myLooper() == Looper.getMainLooper()) { // UI主线程
+            nameView.setText(name+"行动中...");
+        } else { // 非UI主线程
+            nameView.post(() -> nameView.setText(name+"行动中..."));
+        }
     }
 }

@@ -19,15 +19,17 @@ public class GameActivity extends AppCompatActivity {
     private Game game;
     private ChessboardView chessboardView;
     private TextView turnsView;
+    private TextView nameView;
     private GameUIHelper helper;
     private GameHistory gameHistory;
 
     public void Init() {
         setContentView(R.layout.activity_game);
         turnsView = findViewById(R.id.turnsView);
+        nameView = findViewById(R.id.nameView);
         /*初始化 ChessboardView*/
         chessboardView = findViewById(R.id.chessboard_view);
-        helper = new GameUIHelper(chessboardView, turnsView, this);
+        helper = new GameUIHelper(chessboardView, turnsView, nameView,this);
         gameHistory = new GameHistory(this);
     }
 
@@ -40,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
         //player2 = new AI("Ai", 2); // 玩家2是机器玩家
         String mode = getIntent().getStringExtra("mode");
         int difficultyValue = getIntent().getIntExtra("difficulty", 1);
+        int roomNum = getIntent().getIntExtra("roomID", 114);
         switch (mode) {
             case "ai":
                 game.SetGameType(GameType.PlayerVsAi,difficultyValue);
@@ -50,6 +53,7 @@ public class GameActivity extends AppCompatActivity {
             case "internet":
                 game.SetGameType(GameType.PlayerVsInternet,0);
                 client.Start();
+                client.JoinRoom(roomNum);
                 break;
         }
         // 设置 ChessboardView 的 Board 实例
