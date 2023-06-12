@@ -172,6 +172,9 @@ public class Game {
                 StartAi();
             }
         } else {
+            //其实每次的回合数自增对应的是上一次落子，所以即使游戏结束了，最后一次落子后不切换玩家也要+1
+            turns++;
+            helper.SetTurns(getTurns());
             GameFinish();
         }
     }
