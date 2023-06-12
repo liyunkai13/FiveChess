@@ -111,7 +111,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
             while (isPlaying&&currentIndex<Intentions.size()) {
                 Log.d("currentIndex", String.valueOf(currentIndex));
                 int[] intention = Intentions.get(currentIndex);
-                board.placePiece(intention[0], intention[1],currentIndex % 2 == 0 ? 1 : 2);
+                board.placePiece(intention[1], intention[0],currentIndex % 2 == 0 ? 1 : 2);
                 chessboardView.postInvalidate();
                 textView.post(() -> textView.setText("回合数："+currentIndex));
                 currentIndex++;
@@ -130,7 +130,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
     public void cancelDrop() {
         if (currentIndex > 0) {
             int[] intention = Intentions.get(currentIndex-1);
-            board.cancelPiece(intention[0], intention[1]);
+            board.cancelPiece(intention[1], intention[0]);
             currentIndex--;
             isPlaying = false;
             whetherPlay.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.play));
@@ -142,7 +142,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
     public void nextDrop() {
         if (currentIndex < Intentions.size()) {
             int [] intention = Intentions.get(currentIndex);
-            board.placePiece(intention[0],intention[1],currentIndex % 2 == 0 ? 1 : 2);
+            board.placePiece(intention[1],intention[0],currentIndex % 2 == 0 ? 1 : 2);
             chessboardView.postInvalidate();
             currentIndex++;
             textView.setText("回合数："+currentIndex);
