@@ -1,6 +1,7 @@
 package com.example.fivechessfront.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button registerButton;
+    private String username;
+    private String password;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +37,18 @@ public class LoginActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.registerButton);
 
         Button loginButton = findViewById(R.id.loginButton);
+        pref = getSharedPreferences("data", MODE_PRIVATE);
+        //获取sharePreferences中的账号密码
+        username = pref.getString("username", "");
+        password = pref.getString("password", "");
+        usernameEditText.setText(username);
+        passwordEditText.setText(password);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+                username = usernameEditText.getText().toString();
+                password = passwordEditText.getText().toString();
 
                 // 在数据库中验证账户信息
                 boolean isValid = validateAccount(username, password);
@@ -49,6 +60,11 @@ public class LoginActivity extends AppCompatActivity {
                     Account account = new Account(username, password);
                     // 保存账户对象到 AccountManager
                     AccountManager.getInstance().setAccount(account);
+                    //使用sharePreferences保存账号密码
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.apply();
                     // 登录成功，跳转到主界面
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
